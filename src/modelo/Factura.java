@@ -15,7 +15,7 @@ public class Factura {
     private double precioNeto;
     private double precioIva;
     private final static double COSTO_IVA = 0.19;
-    private int costoIva = (int) COSTO_IVA;
+    private int costoIva = (int) (COSTO_IVA * 100);
     //private final static int costoIvaDBO = (int) COSTO_IVA;
     private String fechaCompra;
     private String horaCompra;
@@ -29,7 +29,6 @@ public class Factura {
     public Factura(double precioNeto, String fechaCompra, String horaCompra, Distribuidor distribuidor, int idPago, String detalleCompra) {
         this.precioNeto = precioNeto;
         this.precioIva = (precioNeto * COSTO_IVA) + precioNeto;
-        //this.costoIva = costoIvaDBO;
         this.fechaCompra = fechaCompra;
         this.horaCompra = horaCompra;
         this.distribuidor = distribuidor;
@@ -37,11 +36,10 @@ public class Factura {
         this.detalleCompra = detalleCompra;
     }
 
-    public Factura(int idFactura, double costoNeto, double precioIva, String fechaCompra, String horaCompra, Distribuidor distribuidor, int idPago, String detalleCompra) {
+    public Factura(int idFactura, double costoNeto, String fechaCompra, String horaCompra, Distribuidor distribuidor, int idPago, String detalleCompra) {
         this.idFactura = idFactura;
         this.precioNeto = costoNeto;
         this.precioIva = (costoNeto * COSTO_IVA) + costoNeto;
-        //this.costoIva = (int) COSTO_IVA;
         this.fechaCompra = fechaCompra;
         this.horaCompra = horaCompra;
         this.distribuidor = distribuidor;

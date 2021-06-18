@@ -28,6 +28,8 @@ public class FacturaDAO extends DAO implements IDAO {
     private static final String SQL_DELETE = "DELETE FROM factura WHERE id_factura = ?";
 
     private static final String SQL_UPDATE = "UPDATE factura SET precio_neto = ?, precio_iva = ?, costo_iva = ?, fecha_compra = ?, hora_compra = ?, id_distribuidor = ?, id_tipo_pago = ?, detalle_compra = ? WHERE id_factura = ?";
+    
+    private static final String SQL_UPDATE_COMPRA = "UPDATE compra set id_distribuidor = ? WHERE id_factura = ?";
 
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM factura WHERE id_factura = ?";
 
@@ -78,7 +80,6 @@ public class FacturaDAO extends DAO implements IDAO {
         PreparedStatement stmt = null;
         Boolean estado = false;
         Factura factura = (Factura) obj;
-        DistribuidorDAO distDAO = new DistribuidorDAO();
 
         try {
             conn = getConnection();
@@ -104,6 +105,7 @@ public class FacturaDAO extends DAO implements IDAO {
             stmt = conn.prepareStatement(SQL_INSERT_COMPRA);
             stmt.setInt(1, factura.getDistribuidor().getIdDistribuidor());
             stmt.setInt(2, id);
+            stmt.executeUpdate();
             stmt.close();
             
             estado = true;
@@ -120,7 +122,45 @@ public class FacturaDAO extends DAO implements IDAO {
 
     @Override
     public boolean modificar(int id, Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        Boolean estado = false;
+        Factura factura = (Factura) obj;
+          try {
+            conn = getConnection();
+            stmt = conn.prepareStatement(SQL_UPDATE);
+
+            stmt.setDouble(1, factura.getPrecioNeto());
+            stmt.setDouble(2, factura.getPrecioIva());
+            stmt.setInt(3, factura.getCostoIva());
+            stmt.setString(4, factura.getFechaCompra());
+            stmt.setString(5, factura.getHoraCompra());
+            stmt.setInt(6, factura.getDistribuidor().getIdDistribuidor());
+            stmt.setInt(7, factura.getIdPago());
+            stmt.setString(8, factura.getDetalleCompra());
+            stmt.setInt(9, id);
+            stmt.executeUpdate();
+
+          
+            factura.setIdFactura(id);
+            stmt.close();
+            
+            stmt = conn.prepareStatement(SQL_UPDATE_COMPRA);
+            stmt.setInt(1, factura.getDistribuidor().getIdDistribuidor());
+            stmt.setInt(2, id);
+            stmt.executeUpdate();
+            stmt.close();
+            
+            estado = true;
+            System.out.println("Actualizo los registros de la factura y la compra");
+        } catch (SQLException ex) {
+            System.out.println("Error al actualizar registros" + ex.getMessage());
+
+        } finally {
+            close(stmt);
+            close(conn);
+        }
+        return estado;
     }
 
     @Override

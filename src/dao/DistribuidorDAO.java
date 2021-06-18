@@ -34,7 +34,7 @@ public class DistribuidorDAO extends DAO{
 
         try {
             conn = getConnection();
-            stmt = conn.prepareStatement(SQL_SELECT);
+        stmt = conn.prepareStatement(SQL_SELECT);
             ResultSet rs = stmt.executeQuery();
             TelefonoDAO telfDAO = new TelefonoDAO();
             DireccionDAO direcDAO = new DireccionDAO();
@@ -50,7 +50,7 @@ public class DistribuidorDAO extends DAO{
                 Telefono telefono = (Telefono) telfDAO.buscar(idTelf);
                 Direccion direccion = (Direccion) direcDAO.buscar(idDirec);
 
-                Distribuidor distribuidor = new Distribuidor(idDistribuidor, rut, fechaLaboral, telefono, direccion, estado);
+                Distribuidor distribuidor = new Distribuidor(idDistribuidor, rut, telefono, direccion, fechaLaboral,estado);
 
                 list.add(distribuidor);
             }
@@ -142,7 +142,7 @@ public class DistribuidorDAO extends DAO{
                 Telefono telefono = (Telefono) telfDAO.buscar(idTelf);
                 Direccion direccion = (Direccion) direcDAO.buscar(idDirec);
 
-                Distribuidor distribuidor = new Distribuidor(idDistribuidor, rut, fechaLaboral, telefono, direccion, estado);
+               Distribuidor distribuidor = new Distribuidor(idDistribuidor, rut, telefono, direccion, fechaLaboral, estado);
                 return distribuidor;
             } else {
                 return null;

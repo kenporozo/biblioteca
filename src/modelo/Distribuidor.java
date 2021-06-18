@@ -22,18 +22,18 @@ public class Distribuidor {
 
     public Distribuidor(String rutDistribuidor, Telefono telefono, Direccion direccion,  String fechaLaboral, int estado) {
         this.rutDistribuidor = rutDistribuidor;
-        this.fechaLaboral = fechaLaboral;
         this.telefono = telefono;
         this.direccion = direccion;
+        this.fechaLaboral = fechaLaboral;
         this.estado = estado;
     }
 
-    public Distribuidor(int idDistribuidor, String rutDistribuidor, String fechaLaboral, Telefono telefono, Direccion direccion, int estado) {
+    public Distribuidor(int idDistribuidor, String rutDistribuidor,  Telefono telefono, Direccion direccion, String fechaLaboral, int estado) {
         this.idDistribuidor = idDistribuidor;
         this.rutDistribuidor = rutDistribuidor;
-        this.fechaLaboral = fechaLaboral;
         this.telefono = telefono;
         this.direccion = direccion;
+        this.fechaLaboral = fechaLaboral;
         this.estado = estado;
     }
 

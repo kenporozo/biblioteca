@@ -131,13 +131,13 @@ public class LibroDAO extends DAO {
         return estado;
     }
 
-    public boolean actualizar(Libro libro, int idAutor, int idCategoria, int idEstado) {
+    public boolean actualizar(Libro libro, int idAutor, int idCategoria, int idEstado, int idLibro) {
         Connection conn = null;
         PreparedStatement stmt = null;
         Boolean estado = false;
         try {
             conn = getConnection();
-            stmt = conn.prepareStatement(SQL_UPDATE, Statement.RETURN_GENERATED_KEYS);
+            stmt = conn.prepareStatement(SQL_UPDATE);
             stmt.setInt(1, libro.getIsbn());
             stmt.setString(2, libro.getTitulo());
             stmt.setInt(3, libro.getCantidadPaginas());
@@ -145,30 +145,26 @@ public class LibroDAO extends DAO {
             stmt.setInt(5, libro.getPrecio());
             stmt.setInt(6, libro.getIdioma().getIdIdioma());
             stmt.setInt(7, libro.getEditorial().getIdEditorial());
-            stmt.setInt(8, 7);
+            stmt.setInt(8, idLibro);
             stmt.executeUpdate();
 
-            /*ResultSet keys = stmt.getGeneratedKeys();
-            keys.next();
-            int id = keys.getInt(1);*/
-            //libro.setIdLibro(id);
             stmt.close();
 
             stmt = conn.prepareStatement(SQL_UPDATE_AUTOR_LIBRO);
             stmt.setInt(1, idAutor);
-            stmt.setInt(2, 7);
+            stmt.setInt(2, idLibro);
             stmt.executeUpdate();
             stmt.close();
 
             stmt = conn.prepareStatement(SQL_UPDATE_CATEGORIA_LIBRO);
             stmt.setInt(1, idCategoria);
-            stmt.setInt(2, 7);
+            stmt.setInt(2, idLibro);
             stmt.executeUpdate();
             stmt.close();
 
             stmt = conn.prepareStatement(SQL_UPDATE_INVENTARIO);
             stmt.setInt(1, idEstado);
-            stmt.setInt(2, 7);
+            stmt.setInt(2, idLibro);
             stmt.executeUpdate();
             stmt.close();
 

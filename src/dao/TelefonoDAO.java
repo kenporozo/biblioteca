@@ -78,7 +78,7 @@ public class TelefonoDAO extends DAO implements IDAO{
     }
 
     @Override
-    public boolean modificar(int idTelefono, Object obj) {
+    public boolean modificar(Object obj) {
         Connection conn = null;
         PreparedStatement stmt = null;
         Boolean estado = false;
@@ -88,7 +88,7 @@ public class TelefonoDAO extends DAO implements IDAO{
             stmt = conn.prepareStatement(SQL_UPDATE);
             
             stmt.setString(1, telefono.getNumTelf());
-            stmt.setInt(2, idTelefono);
+            stmt.setInt(2, telefono.getIdTelefono());
             stmt.executeUpdate();
             
             estado = true;

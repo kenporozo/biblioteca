@@ -67,11 +67,11 @@ public class Test {
        //Distribuidor distribuidor = new Distribuidor(10, "6-5", telefono, direccion, "2021-06-14", 2);
 //     //dist.actualizar(10,distribuidor); 
 
-        Distribuidor distribuidor = dist.buscar(3);
-//        System.out.println(dist.buscar(10));
-        FacturaDAO facturaDAO = new FacturaDAO();
-        Factura factura = new Factura(2190, "2021-06-22", "14:29", distribuidor, 2, "Felices los 4");
-        facturaDAO.modificar(14,factura);
+//        Distribuidor distribuidor = dist.buscar(3);
+////        System.out.println(dist.buscar(10));
+//        FacturaDAO facturaDAO = new FacturaDAO();
+//        Factura factura = new Factura(2190, "2021-06-22", "14:29", distribuidor, 2, "Felices los 4");
+//        facturaDAO.modificar(14,factura);
         
         //System.out.println(facturaDAO.getList());
     }

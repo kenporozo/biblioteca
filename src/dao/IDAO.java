@@ -17,7 +17,7 @@ public interface IDAO {
     
     public abstract boolean insertar(Object obj);
     
-    public abstract boolean modificar(int id, Object obj);
+    public abstract boolean modificar(Object obj);
     
     public abstract boolean eliminar(int id);
     

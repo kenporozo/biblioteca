@@ -80,7 +80,7 @@ public class DireccionDAO extends DAO implements IDAO{
     }
     
     @Override
-    public boolean modificar(int idDireccion, Object obj) {
+    public boolean modificar(Object obj) {
         Connection conn = null;
         PreparedStatement stmt = null;
         Boolean estado = false;
@@ -90,7 +90,7 @@ public class DireccionDAO extends DAO implements IDAO{
             stmt = conn.prepareStatement(SQL_UPDATE);
 
             stmt.setString(1, direccion.getDireccion());
-            stmt.setInt(2, idDireccion);
+            stmt.setInt(2, direccion.getIdDireccion());
             stmt.executeUpdate();
 
             estado = true;

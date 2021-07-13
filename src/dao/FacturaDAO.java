@@ -121,7 +121,7 @@ public class FacturaDAO extends DAO implements IDAO {
     }
 
     @Override
-    public boolean modificar(int id, Object obj) {
+    public boolean modificar(Object obj) {
         Connection conn = null;
         PreparedStatement stmt = null;
         Boolean estado = false;
@@ -138,16 +138,16 @@ public class FacturaDAO extends DAO implements IDAO {
             stmt.setInt(6, factura.getDistribuidor().getIdDistribuidor());
             stmt.setInt(7, factura.getIdPago());
             stmt.setString(8, factura.getDetalleCompra());
-            stmt.setInt(9, id);
+            stmt.setInt(9, factura.getIdFactura());
             stmt.executeUpdate();
 
           
-            factura.setIdFactura(id);
+            //factura.setIdFactura(id);
             stmt.close();
             
             stmt = conn.prepareStatement(SQL_UPDATE_COMPRA);
             stmt.setInt(1, factura.getDistribuidor().getIdDistribuidor());
-            stmt.setInt(2, id);
+            stmt.setInt(2, factura.getIdFactura());
             stmt.executeUpdate();
             stmt.close();
             

@@ -79,7 +79,7 @@ public class EditorialDAO extends DAO implements IDAO{
     }
     
     @Override
-    public boolean modificar(int idEditorial, Object obj) {
+    public boolean modificar(Object obj) {
         Connection conn = null;
         PreparedStatement stmt = null;
         Boolean estado = false;
@@ -89,7 +89,7 @@ public class EditorialDAO extends DAO implements IDAO{
             stmt = conn.prepareStatement(SQL_UPDATE);
             
             stmt.setString(1, editorial.getNombreEditorial());
-            stmt.setInt(2, idEditorial);
+            stmt.setInt(2, editorial.getIdEditorial());
             stmt.executeUpdate();
             
             estado = true;

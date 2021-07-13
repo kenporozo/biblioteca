@@ -79,7 +79,7 @@ public class CategoriaDAO extends DAO implements IDAO{
     }
 
     @Override
-    public boolean modificar(int idCategoria, Object obj) {
+    public boolean modificar(Object obj) {
         Connection conn = null;
         PreparedStatement stmt = null;
         Boolean estado = false;
@@ -89,7 +89,7 @@ public class CategoriaDAO extends DAO implements IDAO{
             stmt = conn.prepareStatement(SQL_UPDATE);
 
             stmt.setString(1, categoria.getNombreCategoria());
-            stmt.setInt(2, idCategoria);
+            stmt.setInt(2, categoria.getIdCategoria());
             stmt.executeUpdate();
 
             estado = true;

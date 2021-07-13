@@ -93,7 +93,7 @@ public class AutorDAO extends DAO implements IDAO{
     }
 
     @Override
-    public boolean modificar(int idAutor, Object obj) {
+    public boolean modificar(Object obj) {
         Connection conn = null;
         PreparedStatement stmt = null;
         Boolean estado = false;
@@ -104,7 +104,7 @@ public class AutorDAO extends DAO implements IDAO{
             stmt = conn.prepareStatement(SQL_UPDATE);
             stmt.setString(1, autor.getNombreAutor());
             stmt.setString(2, autor.getApellidoPaterno());
-            stmt.setInt(3, idAutor);
+            stmt.setInt(3, autor.getIdAutor());
             stmt.executeUpdate();
             estado = true;
             System.out.println("Actualizo correctamente");

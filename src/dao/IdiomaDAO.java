@@ -77,7 +77,7 @@ public class IdiomaDAO extends DAO implements IDAO{
     }
     
      @Override
-    public boolean modificar(int idIdioma, Object obj) {
+    public boolean modificar(Object obj) {
         Connection conn = null;
         PreparedStatement stmt = null;
         Boolean estado = false;
@@ -87,7 +87,7 @@ public class IdiomaDAO extends DAO implements IDAO{
             stmt = conn.prepareStatement(SQL_UPDATE);
             
             stmt.setString(1, idioma.getIdioma());
-            stmt.setInt(2, idIdioma);
+            stmt.setInt(2, idioma.getIdIdioma());
             stmt.executeUpdate();
             
             estado = true;

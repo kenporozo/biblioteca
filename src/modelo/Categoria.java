@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import java.util.Objects;
+
 /**
  *
  * @author Usuario
@@ -43,7 +45,37 @@ public class Categoria {
 
     @Override
     public String toString() {
-        return "Categoria: "  + idCategoria + " " + nombreCategoria;
+        return  nombreCategoria;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + this.idCategoria;
+        hash = 89 * hash + Objects.hashCode(this.nombreCategoria);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Categoria other = (Categoria) obj;
+        if (this.idCategoria != other.idCategoria) {
+            return false;
+        }
+        if (!Objects.equals(this.nombreCategoria, other.nombreCategoria)) {
+            return false;
+        }
+        return true;
+    }
+    
     
 }

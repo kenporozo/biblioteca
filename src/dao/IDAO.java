@@ -12,14 +12,14 @@ import java.util.ArrayList;
  * @author Usuario
  */
 public interface IDAO {
-    
+
     public abstract ArrayList<Object> getList();
-    
+
     public abstract boolean insertar(Object obj);
-    
+
     public abstract boolean modificar(Object obj);
-    
+
     public abstract boolean eliminar(int id);
-    
+
     public abstract Object buscar(int id);
 }

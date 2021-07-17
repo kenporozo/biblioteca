@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import java.util.Objects;
+
 /**
  *
  * @author Usuario
@@ -64,7 +66,42 @@ public class Autor {
 
     @Override
     public String toString() {
-        return "Autor: " + idAutor + " " + nombreAutor + " " + apellidoPaterno;
+        return  nombreAutor + " " + apellidoPaterno;
+    } 
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + this.idAutor;
+        hash = 59 * hash + Objects.hashCode(this.nombreAutor);
+        hash = 59 * hash + Objects.hashCode(this.apellidoPaterno);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Autor other = (Autor) obj;
+        if (this.idAutor != other.idAutor) {
+            return false;
+        }
+        if (!Objects.equals(this.nombreAutor, other.nombreAutor)) {
+            return false;
+        }
+        if (!Objects.equals(this.apellidoPaterno, other.apellidoPaterno)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }

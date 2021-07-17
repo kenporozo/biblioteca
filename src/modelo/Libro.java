@@ -19,11 +19,14 @@ public class Libro {
     private int precio;
     private Idioma idioma;
     private Editorial editorial;
+    private Categoria categoria;
+    private Autor autor;
+    private int estado;
 
     public Libro() {
     }
 
-    public Libro(int isbn, String titulo, int cantidadPaginas, String fechaPublicacion, int precio, Idioma idioma, Editorial editorial) {
+    public Libro(int isbn, String titulo, int cantidadPaginas, String fechaPublicacion, int precio, Idioma idioma, Editorial editorial, Categoria categoria, Autor autor) {
         this.isbn = isbn;
         this.titulo = titulo;
         this.cantidadPaginas = cantidadPaginas;
@@ -31,10 +34,13 @@ public class Libro {
         this.precio = precio;
         this.idioma = idioma;
         this.editorial = editorial;
+        this.categoria = categoria;
+        this.autor = autor;
+        this.estado = 3;
 
     }
 
-    public Libro(int idLibro, int isbn, String titulo, int cantidadPaginas, String fechaPublicacion, int precio, Idioma idioma, Editorial editorial) {
+    public Libro(int idLibro, int isbn, String titulo, int cantidadPaginas, String fechaPublicacion, int precio, Idioma idioma, Editorial editorial, Categoria categoria, Autor autor, int estado) {
         this.idLibro = idLibro;
         this.isbn = isbn;
         this.titulo = titulo;
@@ -43,10 +49,10 @@ public class Libro {
         this.precio = precio;
         this.idioma = idioma;
         this.editorial = editorial;
-
+        this.categoria = categoria;
+        this.autor = autor;
+        this.estado = estado;
     }
-
-
 
     public int getIdLibro() {
         return idLibro;
@@ -96,7 +102,6 @@ public class Libro {
         this.precio = precio;
     }
 
-
     public Idioma getIdioma() {
         return idioma;
     }
@@ -104,7 +109,6 @@ public class Libro {
     public void setIdioma(Idioma idioma) {
         this.idioma = idioma;
     }
-
 
     public Editorial getEditorial() {
         return editorial;
@@ -114,9 +118,33 @@ public class Libro {
         this.editorial = editorial;
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Autor getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Autor autor) {
+        this.autor = autor;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
     @Override
     public String toString() {
-        return "Libro: " + idLibro + ", " + isbn + ", " + titulo + ", " + cantidadPaginas + ", " + fechaPublicacion + ", " + precio + ", " + idioma + ", " + editorial;
+        return "Libro: " + idLibro + ", " + isbn + ", " + titulo + ", " + cantidadPaginas + ", " + fechaPublicacion + ", " + precio + ", " + idioma + ", " + editorial + ", " + categoria + ", " + autor + ", " + estado;
     }
 
 }

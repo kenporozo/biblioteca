@@ -5,12 +5,15 @@
  */
 package modelo;
 
+import java.util.Objects;
+
 /**
  *
  * @author Usuario
  */
 public class Distribuidor {
     private int idDistribuidor;
+    private String nombreDis;
     private String rutDistribuidor;
     private String fechaLaboral;
     private Telefono telefono;
@@ -20,16 +23,17 @@ public class Distribuidor {
     public Distribuidor() {
     }
 
-    public Distribuidor(String rutDistribuidor, Telefono telefono, Direccion direccion,  String fechaLaboral, int estado) {
+    public Distribuidor(String nombreDis, String rutDistribuidor, Telefono telefono, Direccion direccion) {
+        this.nombreDis = nombreDis;
         this.rutDistribuidor = rutDistribuidor;
         this.telefono = telefono;
         this.direccion = direccion;
-        this.fechaLaboral = fechaLaboral;
-        this.estado = estado;
+        this.estado = 1;
     }
 
-    public Distribuidor(int idDistribuidor, String rutDistribuidor,  Telefono telefono, Direccion direccion, String fechaLaboral, int estado) {
+    public Distribuidor(int idDistribuidor, String nombreDis, String rutDistribuidor,  Telefono telefono, Direccion direccion, String fechaLaboral, int estado) {
         this.idDistribuidor = idDistribuidor;
+        this.nombreDis = nombreDis;
         this.rutDistribuidor = rutDistribuidor;
         this.telefono = telefono;
         this.direccion = direccion;
@@ -85,9 +89,68 @@ public class Distribuidor {
         this.estado = estado;
     }
     
+        public String getNombreDis() {
+        return nombreDis;
+    }
+
+    public void setNombreDis(String nombreDis) {
+        this.nombreDis = nombreDis;
+    }
+    
     @Override
     public String toString() {
-        return "Distribuidor: " + idDistribuidor + " " + rutDistribuidor + " " + fechaLaboral + " " + telefono + " " + direccion + " " + estado;
+        return "Distribuidor: " + idDistribuidor +" "+ nombreDis+ " " + rutDistribuidor + " " + fechaLaboral + " " + telefono + " " + direccion + " " + estado;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + this.idDistribuidor;
+        hash = 47 * hash + Objects.hashCode(this.nombreDis);
+        hash = 47 * hash + Objects.hashCode(this.rutDistribuidor);
+        hash = 47 * hash + Objects.hashCode(this.fechaLaboral);
+        hash = 47 * hash + Objects.hashCode(this.telefono);
+        hash = 47 * hash + Objects.hashCode(this.direccion);
+        hash = 47 * hash + this.estado;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Distribuidor other = (Distribuidor) obj;
+        if (this.idDistribuidor != other.idDistribuidor) {
+            return false;
+        }
+        if (this.estado != other.estado) {
+            return false;
+        }
+        if (!Objects.equals(this.nombreDis, other.nombreDis)) {
+            return false;
+        }
+        if (!Objects.equals(this.rutDistribuidor, other.rutDistribuidor)) {
+            return false;
+        }
+        if (!Objects.equals(this.fechaLaboral, other.fechaLaboral)) {
+            return false;
+        }
+        if (!Objects.equals(this.telefono, other.telefono)) {
+            return false;
+        }
+        if (!Objects.equals(this.direccion, other.direccion)) {
+            return false;
+        }
+        return true;
+    }
+
+  
 
 }

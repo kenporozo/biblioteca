@@ -16,31 +16,36 @@ import modelo.*;
  *
  * @author Usuario
  */
-public class DistribuidorDAO extends DAO{
+public class DistribuidorDAO extends DAO implements IDAO {
 
-    private static final String SQL_INSERT = "INSERT INTO distribuidor(rut_distribuidor, id_direccion, id_telefono, fecha_ini_laboral, id_entidad_estado) VALUES (?, ?, ?, ?, ?)";
+    private static final String SQL_INSERT = "INSERT INTO distribuidor(empresa, rut_distribuidor, id_direccion, id_telefono, fecha_ini_laboral, id_entidad_estado) VALUES (?, ?, ?, ?, CURDATE(), ?)";
 
     private static final String SQL_SELECT = "SELECT * FROM distribuidor ORDER BY id_distribuidor";
 
-    private static final String SQL_UPDATE = "UPDATE distribuidor SET rut_distribuidor = ?, id_direccion = ?, id_telefono = ?, fecha_ini_laboral = ?, id_entidad_estado = ? WHERE id_distribuidor = ?";
+    private static final String SQL_UPDATE = "UPDATE distribuidor SET empresa = ? rut_distribuidor = ?, id_direccion = ?, id_telefono = ? WHERE id_distribuidor = ?";
+
+    private static final String SQL_DELETE = "UPDATE distribuidor SET id_entidad_estado = 2 WHERE id_distribuidor = ?";
+    
+    private static final String SQL_ACTIVAR = "UPDATE distribuidor SET id_entidad_estado = 1 WHERE id_distribuidor = ?";
 
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM distribuidor WHERE id_distribuidor = ?";
 
-    
-    public ArrayList<Distribuidor> getList() {
+    @Override
+    public ArrayList<Object> getList() {
         Connection conn = null;
         PreparedStatement stmt = null;
-        ArrayList<Distribuidor> list = new ArrayList<>();
+        ArrayList<Object> list = new ArrayList<>();
 
         try {
             conn = getConnection();
-        stmt = conn.prepareStatement(SQL_SELECT);
+            stmt = conn.prepareStatement(SQL_SELECT);
             ResultSet rs = stmt.executeQuery();
             TelefonoDAO telfDAO = new TelefonoDAO();
             DireccionDAO direcDAO = new DireccionDAO();
 
             while (rs.next()) {
                 int idDistribuidor = rs.getInt("id_distribuidor");
+                String empresa = rs.getString("empresa");
                 String rut = rs.getString("rut_distribuidor");
                 int idDirec = rs.getInt("id_direccion");
                 int idTelf = rs.getInt("id_telefono");
@@ -50,7 +55,7 @@ public class DistribuidorDAO extends DAO{
                 Telefono telefono = (Telefono) telfDAO.buscar(idTelf);
                 Direccion direccion = (Direccion) direcDAO.buscar(idDirec);
 
-                Distribuidor distribuidor = new Distribuidor(idDistribuidor, rut, telefono, direccion, fechaLaboral,estado);
+                Distribuidor distribuidor = new Distribuidor(idDistribuidor, empresa, rut, telefono, direccion, fechaLaboral, estado);
 
                 list.add(distribuidor);
             }
@@ -64,20 +69,20 @@ public class DistribuidorDAO extends DAO{
         return list;
     }
 
-
-    public boolean insertar(Distribuidor distribuidor) {
+    @Override
+    public boolean insertar(Object obj) {
         Connection conn = null;
         PreparedStatement stmt = null;
         Boolean estado = false;
-     
+        Distribuidor distribuidor = (Distribuidor) obj;
         try {
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
-            stmt.setString(1, distribuidor.getRutDistribuidor());
-            stmt.setInt(2, distribuidor.getDireccion().getIdDireccion());
-            stmt.setInt(3, distribuidor.getTelefono().getIdTelefono());
-            stmt.setString(4, distribuidor.getFechaLaboral());
-            stmt.setInt(5, distribuidor.getEstado());
+            stmt.setString(1, distribuidor.getNombreDis());
+            stmt.setString(2, distribuidor.getRutDistribuidor());
+            stmt.setInt(3, distribuidor.getDireccion().getIdDireccion());
+            stmt.setInt(4, distribuidor.getTelefono().getIdTelefono());
+            stmt.setInt(6, distribuidor.getEstado());
             stmt.executeUpdate();
             estado = true;
             System.out.println("Inserto el distribuidor");
@@ -90,20 +95,20 @@ public class DistribuidorDAO extends DAO{
         return estado;
     }
 
-
-    public boolean modificar(int idDistribuidor, Distribuidor distribuidor) {
+    @Override
+    public boolean modificar(Object obj) {
         Connection conn = null;
         PreparedStatement stmt = null;
         Boolean estado = false;
+        Distribuidor distribuidor = (Distribuidor) obj;
         try {
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_UPDATE);
-            stmt.setString(1, distribuidor.getRutDistribuidor());
-            stmt.setInt(2, distribuidor.getDireccion().getIdDireccion());
-            stmt.setInt(3, distribuidor.getTelefono().getIdTelefono());
-            stmt.setString(4, distribuidor.getFechaLaboral());
-            stmt.setInt(5, distribuidor.getEstado());
-            stmt.setInt(6, idDistribuidor);
+            stmt.setString(1, distribuidor.getNombreDis());
+            stmt.setString(2, distribuidor.getRutDistribuidor());
+            stmt.setInt(3, distribuidor.getDireccion().getIdDireccion());
+            stmt.setInt(4, distribuidor.getTelefono().getIdTelefono());
+            stmt.setInt(5, distribuidor.getIdDistribuidor());
             stmt.executeUpdate();
 
             estado = true;
@@ -117,7 +122,7 @@ public class DistribuidorDAO extends DAO{
         return estado;
     }
 
-  
+    @Override
     public Distribuidor buscar(int idDistribuidor) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -133,6 +138,7 @@ public class DistribuidorDAO extends DAO{
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
+                String empresa = rs.getString("empresa");
                 String rut = rs.getString("rut_distribuidor");
                 int idDirec = rs.getInt("id_direccion");
                 int idTelf = rs.getInt("id_telefono");
@@ -142,7 +148,7 @@ public class DistribuidorDAO extends DAO{
                 Telefono telefono = (Telefono) telfDAO.buscar(idTelf);
                 Direccion direccion = (Direccion) direcDAO.buscar(idDirec);
 
-               Distribuidor distribuidor = new Distribuidor(idDistribuidor, rut, telefono, direccion, fechaLaboral, estado);
+                Distribuidor distribuidor = new Distribuidor(idDistribuidor, empresa, rut, telefono, direccion, fechaLaboral, estado);
                 return distribuidor;
             } else {
                 return null;
@@ -155,6 +161,49 @@ public class DistribuidorDAO extends DAO{
             close(stmt);
             close(conn);
         }
+    }
+
+    @Override
+    public boolean eliminar(int id) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        Boolean estado = false;
+        try {
+            conn = getConnection();
+            stmt = conn.prepareStatement(SQL_DELETE);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+            estado = true;
+            System.out.println("Desactivo correctamente");
+        } catch (SQLException ex) {
+            System.out.println("Error al desactivar distribuidor " + ex.getMessage());
+        } finally {
+            close(stmt);
+            close(conn);
+        }
+        return estado;
+    }
+    
+    public boolean activar(int id){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        boolean estado = false;
+        
+         try {
+            conn = getConnection();
+            stmt = conn.prepareStatement(SQL_ACTIVAR);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+            stmt.close();
+            estado = true;
+            System.out.println("Actualizo el estado del distribuidor");
+        } catch (SQLException ex) {
+            System.out.println("Error al actualizar el estado del distribuidor " + ex.getMessage());
+        } finally {
+            close(stmt);
+            close(conn);
+        }
+        return estado;
     }
 
 }

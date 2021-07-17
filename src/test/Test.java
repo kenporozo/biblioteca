@@ -6,6 +6,8 @@
 package test;
 
 import dao.*;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 import modelo.*;
 
@@ -35,7 +37,7 @@ public class Test {
         //IdiomaDAO idiomaDao = new IdiomaDAO();
         //Idioma idioma = new Idioma("Mandarin");
         //idiomaDao.eliminar(6);
-        //LibroDAO libroDao = new LibroDAO();
+        // LibroDAO libroDao = new LibroDAO();
         //Idioma idioma = new Idioma(2, "Ingles");
         //Editorial editorial = new Editorial(2, "Editorial 2");
         //Libro libro = new Libro(3562, "Universidad de JavaScript", 86, "2010", 1200,idioma, editorial);
@@ -54,26 +56,37 @@ public class Test {
 //       direc.insertar(direccion);
 //        System.out.println(direc.buscar(7));
 //        System.out.println(direc.getList());
-   DistribuidorDAO dist = new DistribuidorDAO();
-  //  TelefonoDAO telfDAO = new TelefonoDAO();
-  //  DireccionDAO direcDAO = new DireccionDAO();
+        //DistribuidorDAO dist = new DistribuidorDAO();
+        //  TelefonoDAO telfDAO = new TelefonoDAO();
+        //  DireccionDAO direcDAO = new DireccionDAO();
 //     
-   //Telefono telefono = (Telefono) telfDAO.buscar(8);
-   //Direccion direccion = direcDAO.buscar(11);
+        //Telefono telefono = (Telefono) telfDAO.buscar(8);
+        //Direccion direccion = direcDAO.buscar(11);
 //     
 //    // telfDAO.insertar(telefono);
 //     //direcDAO.eliminar(12);
 //     
-       //Distribuidor distribuidor = new Distribuidor(10, "6-5", telefono, direccion, "2021-06-14", 2);
+        //Distribuidor distribuidor = new Distribuidor(10, "6-5", telefono, direccion, "2021-06-14", 2);
 //     //dist.actualizar(10,distribuidor); 
-
 //        Distribuidor distribuidor = dist.buscar(3);
 ////        System.out.println(dist.buscar(10));
 //        FacturaDAO facturaDAO = new FacturaDAO();
 //        Factura factura = new Factura(2190, "2021-06-22", "14:29", distribuidor, 2, "Felices los 4");
 //        facturaDAO.modificar(14,factura);
-        
         //System.out.println(facturaDAO.getList());
-    }
+//        System.out.println("La fecha actual es: " + LocalDate.now());
+//        System.out.println("La hora actual es: " + LocalTime.now());
+//        System.out.println("La fecha y hora actuales son: " + LocalDateTime.now());
+//        System.out.println("El instante actual es: " + Instant.now());
+//        System.out.println("La fecha y hora actuales con zona horaria son: " + ZonedDateTime.now());
+//        System.out.println("La fecha dentro de 10 días: " + LocalDate.now().plusDays(10));
+//        System.out.println("La fecha y hora de hace 32 horas: " + LocalDateTime.now().minusHours(32));
+//        LocalDateTime fechaConHora = LocalDateTime.now();
+//        System.out.println("Formato por defecto: " + fechaConHora);
+//        System.out.println("Formato ISO 8601 (explícito): " + fechaConHora.format(DateTimeFormatter.ISO_DATE_TIME));
 
+//   CorreoDAO cDAO = new CorreoDAO();
+//   Correo correo = new Correo("prueba2@mail.com");
+//        System.out.println(cDAO.insertarID(correo));
+    }
 }

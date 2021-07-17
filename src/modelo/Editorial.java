@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import java.util.Objects;
+
 /**
  *
  * @author Usuario
@@ -45,7 +47,38 @@ public class Editorial {
 
     @Override
     public String toString() {
-        return "Editorial: " + idEditorial + " " + nombreEditorial;
+        return nombreEditorial;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + this.idEditorial;
+        hash = 71 * hash + Objects.hashCode(this.nombreEditorial);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Editorial other = (Editorial) obj;
+        if (this.idEditorial != other.idEditorial) {
+            return false;
+        }
+        if (!Objects.equals(this.nombreEditorial, other.nombreEditorial)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }

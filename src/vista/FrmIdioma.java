@@ -82,6 +82,7 @@ public class FrmIdioma extends javax.swing.JInternalFrame {
         txtId = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
@@ -160,6 +161,8 @@ public class FrmIdioma extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setText("(*) Indica que es un ingreso obligatorio");
+
         javax.swing.GroupLayout jPnael2Layout = new javax.swing.GroupLayout(jPnael2);
         jPnael2.setLayout(jPnael2Layout);
         jPnael2Layout.setHorizontalGroup(
@@ -169,6 +172,7 @@ public class FrmIdioma extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addGap(62, 62, 62)
                 .addGroup(jPnael2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
                     .addGroup(jPnael2Layout.createSequentialGroup()
                         .addComponent(btnGuardar)
                         .addGap(110, 110, 110)
@@ -187,7 +191,9 @@ public class FrmIdioma extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtIdioma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 193, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(27, 27, 27)
                 .addGroup(jPnael2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnVolver))
@@ -295,6 +301,7 @@ public class FrmIdioma extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPnael2;
     private javax.swing.JScrollPane jScrollPane2;

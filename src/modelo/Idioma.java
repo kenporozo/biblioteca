@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import java.util.Objects;
+
 /**
  *
  * @author Usuario
@@ -45,6 +47,37 @@ public class Idioma {
             
       @Override
     public String toString() {
-        return "Idioma: " + idIdioma + " " + idioma;
+        return idioma;
+    } 
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 43 * hash + this.idIdioma;
+        hash = 43 * hash + Objects.hashCode(this.idioma);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Idioma other = (Idioma) obj;
+        if (this.idIdioma != other.idIdioma) {
+            return false;
+        }
+        if (!Objects.equals(this.idioma, other.idioma)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

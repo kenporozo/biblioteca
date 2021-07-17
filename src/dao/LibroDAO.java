@@ -17,7 +17,7 @@ import modelo.*;
  *
  * @author Usuario
  */
-public class LibroDAO extends DAO {
+public class LibroDAO extends DAO implements IDAO{
 
     private static final String SQL_INSERT = "INSERT INTO libro (isbn, titulo, cant_paginas, fecha_publicacion, precio, id_idioma, id_editorial)VALUES(?, ?, ?, ?, ?, ?, ?)";
 
@@ -25,9 +25,9 @@ public class LibroDAO extends DAO {
 
     private static final String SQL_INSERT_CATEGORIA_LIBRO = "INSERT INTO categoria_libro(id_categoria, id_libro) VALUES(?, ?)";
 
-    private static final String SQL_SELECT = "SELECT * FROM libro ORDER BY id_libro";
+    private static final String SQL_SELECT = "SELECT l.id_libro, l.isbn, l.titulo, l.cant_paginas, l.fecha_publicacion, l.precio, i.id_idioma, e.id_editorial, c.id_categoria, a.id_autor, es.id_estado FROM libro AS l INNER JOIN idioma AS i ON l.id_idioma = i.id_idioma INNER JOIN editorial AS e ON l.id_editorial = e.id_editorial INNER JOIN autor_libro AS al ON l.id_libro = al.id_libro INNER JOIN autor AS a ON al.id_autor = a.id_autor INNER JOIN categoria_libro AS cl ON l.id_libro = cl.id_libro INNER JOIN categoria AS c ON cl.id_categoria = c.id_categoria INNER JOIN inventario AS inv ON l.id_libro = inv.id_libro INNER JOIN estado AS es ON inv.id_estado = es.id_estado ORDER BY l.id_libro";
 
-    private static final String SQL_SELECT_BY_ID = "SELECT * FROM libro WHERE id_libro = ?";
+    private static final String SQL_SELECT_BY_ID = "SELECT l.id_libro, l.isbn, l.titulo, l.cant_paginas, l.fecha_publicacion, l.precio, i.id_idioma, e.id_editorial, c.id_categoria, a.id_autor, es.id_estado FROM libro AS l INNER JOIN idioma AS i ON l.id_idioma = i.id_idioma INNER JOIN editorial AS e ON l.id_editorial = e.id_editorial INNER JOIN autor_libro AS al ON l.id_libro = al.id_libro INNER JOIN autor AS a ON al.id_autor = a.id_autor INNER JOIN categoria_libro AS cl ON l.id_libro = cl.id_libro INNER JOIN categoria AS c ON cl.id_categoria = c.id_categoria INNER JOIN inventario AS inv ON l.id_libro = inv.id_libro INNER JOIN estado AS es ON inv.id_estado = es.id_estado WHERE l.id_libro = ?";
 
     private static final String SQL_INSERT_INVENTARIO = "INSERT INTO inventario (id_libro, id_estado, id_biblioteca) VALUES (?, ?, ?)";
 
@@ -38,11 +38,16 @@ public class LibroDAO extends DAO {
     private static final String SQL_UPDATE_CATEGORIA_LIBRO = "UPDATE categoria_libro SET id_categoria = ? WHERE id_libro = ?";
 
     private static final String SQL_UPDATE_INVENTARIO = "UPDATE inventario SET id_estado = ? WHERE id_libro = ?";
+    
+    private static final String SQL_DELETE = "UPDATE inventario SET id_estado = 4 WHERE id_libro = ?";
+    
+    private static final String SQL_ACTIVAR = "UPDATE inventario SET id_estado = 3 WHERE id_libro = ?";
 
-    public ArrayList<Libro> getList() {
+    @Override
+    public ArrayList<Object> getList() {
         Connection conn = null;
         PreparedStatement stmt = null;
-        ArrayList<Libro> list = new ArrayList<>();
+        ArrayList<Object> list = new ArrayList<>();
 
         try {
             conn = getConnection();
@@ -50,21 +55,28 @@ public class LibroDAO extends DAO {
             ResultSet rs = stmt.executeQuery();
             IdiomaDAO idiomaDAO = new IdiomaDAO();
             EditorialDAO editorialDAO = new EditorialDAO();
+            CategoriaDAO categoriaDAO = new CategoriaDAO();
+            AutorDAO autorDAO = new AutorDAO();
 
             while (rs.next()) {
-                int idLibro = rs.getInt("id_libro");
-                int isbn = rs.getInt("isbn");
-                String titulo = rs.getString("titulo");
-                int cant_paginas = rs.getInt("cant_paginas");
-                String fechaPublicacion = rs.getString("fecha_publicacion");
-                int precio = rs.getInt("precio");
-                int idIdioma = rs.getInt("id_idioma");
-                int idEditorial = rs.getInt("id_editorial");
+                int idLibro = rs.getInt("l.id_libro");
+                int isbn = rs.getInt("l.isbn");
+                String titulo = rs.getString("l.titulo");
+                int cant_paginas = rs.getInt("l.cant_paginas");
+                String fechaPublicacion = rs.getString("l.fecha_publicacion");
+                int precio = rs.getInt("l.precio");
+                int idIdioma = rs.getInt("i.id_idioma");
+                int idEditorial = rs.getInt("e.id_editorial");
+                int idCategoria = rs.getInt("c.id_categoria");
+                int idAutor = rs.getInt("a.id_autor");
+                int estado = rs.getInt("es.id_estado");
 
                 Idioma varIdioma = idiomaDAO.buscar(idIdioma);
                 Editorial varEditorial = editorialDAO.buscar(idEditorial);
+                Categoria varCategoria = categoriaDAO.buscar(idCategoria);
+                Autor varAutor = (Autor) autorDAO.buscar(idAutor);
 
-                Libro libro = new Libro(idLibro, isbn, titulo, cant_paginas, fechaPublicacion, precio, varIdioma, varEditorial);
+                Libro libro = new Libro(idLibro, isbn, titulo, cant_paginas, fechaPublicacion, precio, varIdioma, varEditorial, varCategoria, varAutor, estado);
 
                 list.add(libro);
             }
@@ -78,10 +90,12 @@ public class LibroDAO extends DAO {
         return list;
     }
 
-    public boolean insertar(Libro libro, int idAutor, int idCategoria, int idEstado) {
+    @Override
+    public boolean insertar(Object obj) {
         Connection conn = null;
         PreparedStatement stmt = null;
         Boolean estado = false;
+        Libro libro = (Libro) obj;
         try {
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
@@ -98,24 +112,24 @@ public class LibroDAO extends DAO {
             keys.next();
             int id = keys.getInt(1);
 
-            libro.setIdLibro(id);
+           // libro.setIdLibro(id);
             stmt.close();
 
             stmt = conn.prepareStatement(SQL_INSERT_AUTOR_LIBRO);
             stmt.setInt(1, id);
-            stmt.setInt(2, idAutor);
+            stmt.setInt(2, libro.getAutor().getIdAutor());
             stmt.executeUpdate();
             stmt.close();
 
             stmt = conn.prepareStatement(SQL_INSERT_CATEGORIA_LIBRO);
-            stmt.setInt(1, idCategoria);
+            stmt.setInt(1, libro.getCategoria().getIdCategoria());
             stmt.setInt(2, id);
             stmt.executeUpdate();
             stmt.close();
 
             stmt = conn.prepareStatement(SQL_INSERT_INVENTARIO);
             stmt.setInt(1, id);
-            stmt.setInt(2, idEstado);
+            stmt.setInt(2, libro.getEstado());
             stmt.setInt(3, 1);
             stmt.executeUpdate();
             stmt.close();
@@ -131,10 +145,12 @@ public class LibroDAO extends DAO {
         return estado;
     }
 
-    public boolean actualizar(Libro libro, int idAutor, int idCategoria, int idEstado, int idLibro) {
+    @Override
+    public boolean modificar(Object obj) {
         Connection conn = null;
         PreparedStatement stmt = null;
         Boolean estado = false;
+        Libro libro = (Libro) obj;
         try {
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_UPDATE);
@@ -145,26 +161,26 @@ public class LibroDAO extends DAO {
             stmt.setInt(5, libro.getPrecio());
             stmt.setInt(6, libro.getIdioma().getIdIdioma());
             stmt.setInt(7, libro.getEditorial().getIdEditorial());
-            stmt.setInt(8, idLibro);
+            stmt.setInt(8, libro.getIdLibro());
             stmt.executeUpdate();
 
             stmt.close();
 
             stmt = conn.prepareStatement(SQL_UPDATE_AUTOR_LIBRO);
-            stmt.setInt(1, idAutor);
-            stmt.setInt(2, idLibro);
+            stmt.setInt(1, libro.getAutor().getIdAutor());
+            stmt.setInt(2, libro.getIdLibro());
             stmt.executeUpdate();
             stmt.close();
 
             stmt = conn.prepareStatement(SQL_UPDATE_CATEGORIA_LIBRO);
-            stmt.setInt(1, idCategoria);
-            stmt.setInt(2, idLibro);
+            stmt.setInt(1, libro.getCategoria().getIdCategoria());
+            stmt.setInt(2, libro.getIdLibro());
             stmt.executeUpdate();
             stmt.close();
 
             stmt = conn.prepareStatement(SQL_UPDATE_INVENTARIO);
-            stmt.setInt(1, idEstado);
-            stmt.setInt(2, idLibro);
+            stmt.setInt(1, libro.getEstado());
+            stmt.setInt(2, libro.getIdLibro());
             stmt.executeUpdate();
             stmt.close();
 
@@ -179,6 +195,7 @@ public class LibroDAO extends DAO {
         return estado;
     }
 
+    @Override
     public Libro buscar(int idLibro) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -187,6 +204,9 @@ public class LibroDAO extends DAO {
 
             IdiomaDAO idiomaDAO = new IdiomaDAO();
             EditorialDAO editorialDAO = new EditorialDAO();
+            CategoriaDAO categoriaDAO = new CategoriaDAO();
+            AutorDAO autorDAO = new AutorDAO();
+            
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
 
@@ -195,18 +215,23 @@ public class LibroDAO extends DAO {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
 
-                int isbn = rs.getInt("isbn");
-                String titulo = rs.getString("titulo");
-                int cant_paginas = rs.getInt("cant_paginas");
-                String fechaPublicacion = rs.getString("fecha_publicacion");
-                int precio = rs.getInt("precio");
-                int idIdioma = rs.getInt("id_idioma");
-                int idEditorial = rs.getInt("id_editorial");
+                int isbn = rs.getInt("l.isbn");
+                String titulo = rs.getString("l.titulo");
+                int cant_paginas = rs.getInt("l.cant_paginas");
+                String fechaPublicacion = rs.getString("l.fecha_publicacion");
+                int precio = rs.getInt("l.precio");
+                int idIdioma = rs.getInt("i.id_idioma");
+                int idEditorial = rs.getInt("e.id_editorial");
+                int idCategoria = rs.getInt("c.id_categoria");
+                int idAutor = rs.getInt("a.id_autor");
+                int estado = rs.getInt("es.id_estado");
 
                 Idioma varIdioma = idiomaDAO.buscar(idIdioma);
                 Editorial varEditorial = editorialDAO.buscar(idEditorial);
+                Categoria varCategoria = categoriaDAO.buscar(idCategoria);
+                Autor varAutor = (Autor) autorDAO.buscar(idAutor);
 
-                Libro libro = new Libro(idLibro, isbn, titulo, cant_paginas, fechaPublicacion, precio, varIdioma, varEditorial);
+                Libro libro = new Libro(idLibro, isbn, titulo, cant_paginas, fechaPublicacion, precio, varIdioma, varEditorial, varCategoria, varAutor, estado);
                 return libro;
 
             } else {
@@ -221,5 +246,50 @@ public class LibroDAO extends DAO {
             close(conn);
         }
 
+    }
+    
+    @Override
+    public boolean eliminar(int id){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        boolean estado = false;
+        
+         try {
+            conn = getConnection();
+            stmt = conn.prepareStatement(SQL_DELETE);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+            stmt.close();
+            estado = true;
+            System.out.println("Actualizo el estado del libro");
+        } catch (SQLException ex) {
+            System.out.println("Error al actualizar el estado del libro " + ex.getMessage());
+        } finally {
+            close(stmt);
+            close(conn);
+        }
+        return estado;
+    }
+    
+     public boolean activar(int id){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        boolean estado = false;
+        
+         try {
+            conn = getConnection();
+            stmt = conn.prepareStatement(SQL_ACTIVAR);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+            stmt.close();
+            estado = true;
+            System.out.println("Actualizo el estado del libro");
+        } catch (SQLException ex) {
+            System.out.println("Error al actualizar el estado del libro " + ex.getMessage());
+        } finally {
+            close(stmt);
+            close(conn);
+        }
+        return estado;
     }
 }

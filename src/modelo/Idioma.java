@@ -12,19 +12,20 @@ import java.util.Objects;
  * @author Usuario
  */
 public class Idioma {
+
     private int idIdioma;
-   
+
     private String idioma;
-    
-    public Idioma(){
-        
+
+    public Idioma() {
+
     }
-    
-    public Idioma(String idioma){
+
+    public Idioma(String idioma) {
         this.idioma = idioma;
     }
-    
-    public Idioma(int idIdioma, String idioma){
+
+    public Idioma(int idIdioma, String idioma) {
         this.idIdioma = idIdioma;
         this.idioma = idioma;
     }
@@ -44,11 +45,11 @@ public class Idioma {
     public void setIdioma(String idioma) {
         this.idioma = idioma;
     }
-            
-      @Override
+
+    @Override
     public String toString() {
         return idioma;
-    } 
+    }
 
     @Override
     public int hashCode() {
@@ -78,6 +79,5 @@ public class Idioma {
         }
         return true;
     }
-    
-    
+
 }

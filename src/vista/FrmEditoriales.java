@@ -16,6 +16,7 @@ import modelo.Editorial;
  * @author Usuario
  */
 public class FrmEditoriales extends javax.swing.JInternalFrame {
+
     EditorialDAO eDAO = new EditorialDAO();
     String accion;
 
@@ -28,6 +29,7 @@ public class FrmEditoriales extends javax.swing.JInternalFrame {
         this.accion = "guardar";
         txtId.setVisible(false);
     }
+
     private void listar() {
         ArrayList<Object> lista = eDAO.getList();
         DefaultTableModel modeloTabla;
@@ -59,7 +61,6 @@ public class FrmEditoriales extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, mensaje, "System", JOptionPane.INFORMATION_MESSAGE);
     }
 
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,6 +82,7 @@ public class FrmEditoriales extends javax.swing.JInternalFrame {
         txtId = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
@@ -146,7 +148,7 @@ public class FrmEditoriales extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setText("Editorial");
+        jLabel1.setText("Editorial(*)");
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -162,22 +164,31 @@ public class FrmEditoriales extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setText("(*) Indica campo obligatorio");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(jLabel1)
-                .addGap(80, 80, 80)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtEditorial, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGuardar))
-                .addGap(71, 71, 71)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnVolver)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(355, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addComponent(jLabel1)
+                        .addGap(80, 80, 80)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtEditorial, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(78, 78, 78)
+                                .addComponent(btnGuardar)))
+                        .addGap(71, 71, 71)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnVolver)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(300, 300, 300)
+                        .addComponent(jLabel2)))
+                .addContainerGap(338, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,7 +198,9 @@ public class FrmEditoriales extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtEditorial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(130, 130, 130)
+                .addGap(96, 96, 96)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnVolver))
@@ -233,7 +246,7 @@ public class FrmEditoriales extends javax.swing.JInternalFrame {
             btnGuardar.setText("Editar");
 
         } else {
-          this.mensajeError("Seleccione 1 registro a editar.");
+            this.mensajeError("Seleccione 1 registro a editar.");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -256,14 +269,14 @@ public class FrmEditoriales extends javax.swing.JInternalFrame {
             int id = Integer.parseInt(txtId.getText());
             String editorial = txtEditorial.getText();
             edit = new Editorial(id, editorial);
-            if(eDAO.modificar(edit)){
+            if (eDAO.modificar(edit)) {
                 this.mensajeOk("Editorial actualizada existosamente");
                 this.limpiar();
                 this.listar();
                 tabGeneral.setEnabledAt(0, true);
                 tabGeneral.setEnabledAt(1, false);
                 tabGeneral.setSelectedIndex(0);
-            }else{
+            } else {
                 this.mensajeError("Ocurrió un error, la editorial no fue actualizada");
             }
 
@@ -290,6 +303,7 @@ public class FrmEditoriales extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;

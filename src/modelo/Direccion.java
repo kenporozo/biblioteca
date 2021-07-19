@@ -10,14 +10,15 @@ package modelo;
  * @author Usuario
  */
 public class Direccion {
+
     private int idDireccion;
     private String direccion;
-    
-    public Direccion(){
-        
+
+    public Direccion() {
+
     }
-    
-    public Direccion(String direccion){
+
+    public Direccion(String direccion) {
         this.direccion = direccion;
     }
 
@@ -25,8 +26,6 @@ public class Direccion {
         this.idDireccion = idDireccion;
         this.direccion = direccion;
     }
-    
-    
 
     public int getIdDireccion() {
         return idDireccion;
@@ -48,6 +47,5 @@ public class Direccion {
     public String toString() {
         return "Direccion: " + idDireccion + " " + direccion;
     }
-    
-    
+
 }

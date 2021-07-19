@@ -36,6 +36,27 @@ public class Trabajador {
         this.telefono = telefono;
     }
 
+    public Trabajador(int idTrabajador, String nombre) {
+        this.idTrabajador = idTrabajador;
+        this.nombre = nombre;
+    }
+
+    public Trabajador(int idTrabajador, String rut, String nombre, String apellido, Direccion direccion) {
+        this.idTrabajador = idTrabajador;
+        this.rut = rut;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+    }
+
+    public Trabajador(int idTrabajador, String rut, String nombre, String apellido, Correo correo) {
+        this.idTrabajador = idTrabajador;
+        this.rut = rut;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+    }
+
     public Trabajador(String rut, String nombre, String apellido, Telefono telefono, Direccion direccion, Correo correo) {
         this.idBiblioteca = Trabajador.ID_BIBLIOTECA;
         this.rut = rut;
@@ -141,7 +162,7 @@ public class Trabajador {
 
     @Override
     public String toString() {
-        return  idTrabajador + " " + nombre;
+        return idTrabajador + " " + nombre;
     }
 
     @Override

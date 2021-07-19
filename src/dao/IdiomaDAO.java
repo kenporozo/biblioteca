@@ -16,18 +16,25 @@ import modelo.Idioma;
  *
  * @author Usuario
  */
-public class IdiomaDAO extends DAO implements IDAO{
-     private static final String SQL_INSERT = "INSERT INTO idioma(idioma) VALUES (?)";
+public class IdiomaDAO extends DAO implements IDAO {
+
+    private static final String SQL_INSERT = "INSERT INTO idioma(idioma) VALUES (?)";
 
     private static final String SQL_SELECT = "SELECT * FROM idioma ORDER BY id_idioma";
-    
+
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM idioma WHERE id_idioma = ?";
 
     private static final String SQL_DELETE = "DELETE FROM idioma WHERE id_idioma = ?";
 
     private static final String SQL_UPDATE = "UPDATE idioma SET idioma = ? WHERE id_idioma = ?";
 
-     @Override
+    /**
+     * Metodo que sirve para listar informacion de la base de datos
+     *
+     * @return ArrayList de objetos 
+     *
+     */
+    @Override
     public ArrayList<Object> getList() {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -41,7 +48,7 @@ public class IdiomaDAO extends DAO implements IDAO{
             while (rs.next()) {
                 int idIdioma = rs.getInt("id_idioma");
                 String idioma = rs.getString("idioma");
-                Idioma idi = new Idioma(idIdioma,idioma);
+                Idioma idi = new Idioma(idIdioma, idioma);
                 list.add(idi);
             }
         } catch (SQLException ex) {
@@ -53,8 +60,16 @@ public class IdiomaDAO extends DAO implements IDAO{
 
         return list;
     }
-    
-     @Override
+
+    /**
+     * Metodo cuya funcionalidad es agregar objetos a la base de datos
+     * dependiendo de su clase
+     *
+     * @param obj obejto
+     * @return Devuelve un booelean
+     *
+     */
+    @Override
     public boolean insertar(Object obj) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -75,8 +90,14 @@ public class IdiomaDAO extends DAO implements IDAO{
         }
         return estado;
     }
-    
-     @Override
+
+    /**
+     * Metodo encargado de modificar objetos en la base de datos
+     *
+     * @param obj object
+     * @return boolean
+     */
+    @Override
     public boolean modificar(Object obj) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -85,11 +106,11 @@ public class IdiomaDAO extends DAO implements IDAO{
         try {
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_UPDATE);
-            
+
             stmt.setString(1, idioma.getIdioma());
             stmt.setInt(2, idioma.getIdIdioma());
             stmt.executeUpdate();
-            
+
             estado = true;
             System.out.println("Actualizo correctamente");
         } catch (SQLException ex) {
@@ -100,8 +121,16 @@ public class IdiomaDAO extends DAO implements IDAO{
         }
         return estado;
     }
-    
-     @Override
+
+    /**
+     * Metodo que sirve para eliminar o cambiar el estado de los objetos en la
+     * base de datos
+     *
+     * @param idIdioma int
+     * @return boolean
+     *
+     */
+    @Override
     public boolean eliminar(int idIdioma) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -121,8 +150,14 @@ public class IdiomaDAO extends DAO implements IDAO{
         }
         return estado;
     }
-    
-     @Override
+
+    /**
+     * Metodo que se encargar de buscar objetos de la base de datos
+     *
+     * @param idIdioma int
+     * @return object
+     */
+    @Override
     public Idioma buscar(int idIdioma) {
         Connection conn = null;
         PreparedStatement stmt = null;

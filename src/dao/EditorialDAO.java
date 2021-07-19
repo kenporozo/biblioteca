@@ -17,7 +17,7 @@ import modelo.Editorial;
  *
  * @author Usuario
  */
-public class EditorialDAO extends DAO implements IDAO{
+public class EditorialDAO extends DAO implements IDAO {
 
     private static final String SQL_INSERT = "INSERT INTO editorial(nombre_editorial) VALUES (?)";
 
@@ -26,9 +26,15 @@ public class EditorialDAO extends DAO implements IDAO{
     private static final String SQL_DELETE = "DELETE FROM editorial WHERE id_editorial = ?";
 
     private static final String SQL_UPDATE = "UPDATE editorial SET nombre_editorial = ? WHERE id_editorial = ?";
-    
+
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM editorial WHERE id_editorial = ?";
 
+    /**
+     * Metodo que sirve para listar informacion de la base de datos
+     *
+     * @return ArrayList de objetos 
+     *
+     */
     @Override
     public ArrayList<Object> getList() {
         Connection conn = null;
@@ -43,7 +49,7 @@ public class EditorialDAO extends DAO implements IDAO{
             while (rs.next()) {
                 int idEditorial = rs.getInt("id_editorial");
                 String nombreEditorial = rs.getString("nombre_editorial");
-                Editorial editorial = new Editorial(idEditorial,nombreEditorial);
+                Editorial editorial = new Editorial(idEditorial, nombreEditorial);
                 list.add(editorial);
             }
         } catch (SQLException ex) {
@@ -55,7 +61,15 @@ public class EditorialDAO extends DAO implements IDAO{
 
         return list;
     }
-    
+
+    /**
+     * Metodo cuya funcionalidad es agregar objetos a la base de datos
+     * dependiendo de su clase
+     *
+     * @param obj obejeto
+     * @return Devuelve un booelean
+     *
+     */
     @Override
     public boolean insertar(Object obj) {
         Connection conn = null;
@@ -77,7 +91,13 @@ public class EditorialDAO extends DAO implements IDAO{
         }
         return estado;
     }
-    
+
+    /**
+     * Metodo encargado de modificar objetos en la base de datos
+     *
+     * @param obj objeto
+     * @return boolean
+     */
     @Override
     public boolean modificar(Object obj) {
         Connection conn = null;
@@ -87,11 +107,11 @@ public class EditorialDAO extends DAO implements IDAO{
         try {
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_UPDATE);
-            
+
             stmt.setString(1, editorial.getNombreEditorial());
             stmt.setInt(2, editorial.getIdEditorial());
             stmt.executeUpdate();
-            
+
             estado = true;
             System.out.println("Actualizo correctamente");
         } catch (SQLException ex) {
@@ -102,7 +122,15 @@ public class EditorialDAO extends DAO implements IDAO{
         }
         return estado;
     }
-    
+
+    /**
+     * Metodo que sirve para eliminar o cambiar el estado de los objetos en la
+     * base de datos
+     *
+     * @param idEditorial int
+     * @return boolean
+     *
+     */
     @Override
     public boolean eliminar(int idEditorial) {
         Connection conn = null;
@@ -123,7 +151,13 @@ public class EditorialDAO extends DAO implements IDAO{
         }
         return estado;
     }
-    
+
+    /**
+     * Metodo que se encargar de buscar objetos de la base de datos
+     *
+     * @param idEditorial int
+     * @return object
+     */
     @Override
     public Editorial buscar(int idEditorial) {
         Connection conn = null;

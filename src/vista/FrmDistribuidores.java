@@ -5,7 +5,7 @@
  */
 package vista;
 
-import dao.ClienteDAO;
+import dao.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -15,67 +15,61 @@ import modelo.*;
  *
  * @author Usuario
  */
-public class FrmClientes extends javax.swing.JInternalFrame {
+public class FrmDistribuidores extends javax.swing.JInternalFrame {
 
-    ClienteDAO cDAO = new ClienteDAO();
+    DistribuidorDAO disDAO = new DistribuidorDAO();
+    TelefonoDAO tlfDAO = new TelefonoDAO();
+    DireccionDAO dDAO = new DireccionDAO();
     String accion;
 
     /**
-     * Creates new form FrmClientes
+     * Creates new form FrmDistribuidores
      */
-    public FrmClientes() {
+    public FrmDistribuidores() {
         initComponents();
         this.listar();
         this.accion = "guardar";
         txtId.setVisible(false);
-        txtCorreo.setVisible(false);
-        txtDireccion.setVisible(false);
-        txtTelefono.setVisible(false);
-        lblCorreo.setVisible(false);
-        lblTelefono.setVisible(false);
-        lblDireccion.setVisible(false);
     }
 
     private void listar() {
-        ArrayList<Object> lista = cDAO.getList();
+        ArrayList<Object> lista = disDAO.getList();
         DefaultTableModel modeloTabla;
 
-        String[] titulos = {"ID", "RUT", "Nombre", "Apellido", "Fecha de nacimineto", "Estado"};
+        String[] titulos = {"ID", "Empresa", "RUT", "Direccion", "Nro. Telefono", "Fecha antiguedad", "Estado"};
         modeloTabla = new DefaultTableModel(null, titulos);
 
         for (Object obj : lista) {
-            Cliente cliente = (Cliente) obj;
-            Object[] row = new Object[6];
-            row[0] = cliente.getIdCliente();
-            row[1] = cliente.getRut();
-            row[2] = cliente.getNombre();
-            row[3] = cliente.getApellido();
-            row[4] = cliente.getFechaNacimiento();
-            switch (cliente.getEstado()) {
+            Distribuidor distribuidor = (Distribuidor) obj;
+            Object[] row = new Object[7];
+            row[0] = distribuidor.getIdDistribuidor();
+            row[1] = distribuidor.getNombreDis();
+            row[2] = distribuidor.getRutDistribuidor();
+            row[3] = distribuidor.getDireccion().getDireccion();
+            row[4] = distribuidor.getTelefono().getNumTelf();
+            row[5] = distribuidor.getFechaLaboral();
+            switch (distribuidor.getEstado()) {
                 case 1:
-                    row[5] = "Activo";
+                    row[6] = "Activo";
                     break;
                 case 2:
-                    row[5] = "Inactivo";
+                    row[6] = "Inactivo";
                     break;
                 default:
                     throw new AssertionError();
             }
             modeloTabla.addRow(row);
         }
-        tablaListadoClientes.setModel(modeloTabla);
+        tablaListadoDistribuidor.setModel(modeloTabla);
         tabGeneral.setEnabledAt(1, false);
     }
 
     private void limpiar() {
-        txtApellido.setText("");
         txtId.setText("");
         txtNombre.setText("");
         txtRut.setText("");
-        txtCorreo.setText("");
         txtDireccion.setText("");
         txtTelefono.setText("");
-        txtFecha.setText("");
         this.accion = "guardar";
     }
 
@@ -99,7 +93,7 @@ public class FrmClientes extends javax.swing.JInternalFrame {
         tabGeneral = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaListadoClientes = new javax.swing.JTable();
+        tablaListadoDistribuidor = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
         btnActivar = new javax.swing.JButton();
         btnDesactivar = new javax.swing.JButton();
@@ -109,18 +103,11 @@ public class FrmClientes extends javax.swing.JInternalFrame {
         txtRut = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txtApellido = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        txtFecha = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        lblDireccion = new javax.swing.JLabel();
+        Dirección = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
-        lblTelefono = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
-        lblCorreo = new javax.swing.JLabel();
-        txtCorreo = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
         txtId = new javax.swing.JTextField();
@@ -128,13 +115,13 @@ public class FrmClientes extends javax.swing.JInternalFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
         setIconifiable(true);
-        setTitle("Clientes");
+        setTitle("Distribuidores");
 
         tabGeneral.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        tablaListadoClientes.setModel(new javax.swing.table.DefaultTableModel(
+        tablaListadoDistribuidor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -142,7 +129,7 @@ public class FrmClientes extends javax.swing.JInternalFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(tablaListadoClientes);
+        jScrollPane1.setViewportView(tablaListadoDistribuidor);
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -176,29 +163,29 @@ public class FrmClientes extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane1)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(140, 140, 140)
+                .addGap(139, 139, 139)
                 .addComponent(btnNuevo)
-                .addGap(93, 93, 93)
+                .addGap(79, 79, 79)
                 .addComponent(btnActivar)
-                .addGap(81, 81, 81)
+                .addGap(89, 89, 89)
                 .addComponent(btnDesactivar)
-                .addGap(95, 95, 95)
+                .addGap(100, 100, 100)
                 .addComponent(btnEditar)
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addContainerGap(163, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNuevo)
                     .addComponent(btnActivar)
                     .addComponent(btnDesactivar)
                     .addComponent(btnEditar))
-                .addGap(0, 103, Short.MAX_VALUE))
+                .addGap(0, 91, Short.MAX_VALUE))
         );
 
         tabGeneral.addTab("Listado", jPanel1);
@@ -209,19 +196,11 @@ public class FrmClientes extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Nombre(*)");
 
-        jLabel3.setText("Apellido(*)");
+        Dirección.setText("Dirección(*)");
 
-        jLabel4.setText("Fecha de nacimiento");
+        jLabel3.setText("Nro. telefono(*)");
 
-        jLabel5.setText("YYYY/MM/DD");
-
-        lblDireccion.setText("Direccion(*)");
-
-        lblTelefono.setText("Telefono(*)");
-
-        lblCorreo.setText("Correo(*)");
-
-        jLabel9.setText("(*) Indica campo obligatorio.");
+        jLabel4.setText("(*) Indica un campo obligatorio");
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -244,89 +223,59 @@ public class FrmClientes extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(193, 193, 193)
-                        .addComponent(jLabel5)
-                        .addGap(188, 188, 188)
-                        .addComponent(jLabel9))
+                        .addGap(310, 310, 310)
+                        .addComponent(jLabel4))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
-                                .addGap(38, 38, 38)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtRut)
-                                    .addComponent(txtNombre)
-                                    .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(254, 254, 254)
+                        .addComponent(btnGuardar)
+                        .addGap(118, 118, 118)
+                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(53, 53, 53)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(127, 127, 127)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lblDireccion)
-                                    .addComponent(lblTelefono, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblCorreo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(42, 42, 42)
+                                    .addComponent(txtRut)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
+                                .addGap(110, 110, 110)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Dirección, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(59, 59, 59)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtDireccion)
-                                    .addComponent(txtTelefono)
-                                    .addComponent(txtCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(284, 284, 284)
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(241, 241, 241)
-                        .addComponent(btnGuardar)
-                        .addGap(126, 126, 126)
-                        .addComponent(btnVolver)))
-                .addContainerGap(192, Short.MAX_VALUE))
+                                    .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)))
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addGap(53, 53, 53)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblDireccion)
+                    .addComponent(Dirección)
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49)
+                .addGap(56, 56, 56)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTelefono)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(59, 59, 59)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCorreo)
-                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel9))
-                .addGap(55, 55, 55)
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
+                .addComponent(jLabel4)
+                .addGap(60, 60, 60)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnVolver))
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
 
         tabGeneral.addTab("Mantenimiento", jPanel2);
@@ -342,7 +291,7 @@ public class FrmClientes extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(tabGeneral)
                 .addContainerGap())
@@ -357,23 +306,17 @@ public class FrmClientes extends javax.swing.JInternalFrame {
         tabGeneral.setSelectedIndex(1);
         this.accion = "guardar";
         btnGuardar.setText("Guardar");
-        txtCorreo.setVisible(true);
-        txtDireccion.setVisible(true);
-        txtTelefono.setVisible(true);
-        lblCorreo.setVisible(true);
-        lblTelefono.setVisible(true);
-        lblDireccion.setVisible(true);
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarActionPerformed
-        if (tablaListadoClientes.getSelectedRowCount() == 1) {
-            String id = String.valueOf(tablaListadoClientes.getValueAt(tablaListadoClientes.getSelectedRow(), 0));
-            String nombre = String.valueOf(tablaListadoClientes.getValueAt(tablaListadoClientes.getSelectedRow(), 2));
-            String estado = String.valueOf(tablaListadoClientes.getValueAt(tablaListadoClientes.getSelectedRow(), 5));
+        if (tablaListadoDistribuidor.getSelectedRowCount() == 1) {
+            String id = String.valueOf(tablaListadoDistribuidor.getValueAt(tablaListadoDistribuidor.getSelectedRow(), 0));
+            String nombre = String.valueOf(tablaListadoDistribuidor.getValueAt(tablaListadoDistribuidor.getSelectedRow(), 2));
+            String estado = String.valueOf(tablaListadoDistribuidor.getValueAt(tablaListadoDistribuidor.getSelectedRow(), 6));
             if (!estado.equals("Activo")) {
-                if (JOptionPane.showConfirmDialog(this, "Deseas activar al cliente: " + nombre + " ?", "Activar", JOptionPane.YES_NO_OPTION) == 0) {
+                if (JOptionPane.showConfirmDialog(this, "Deseas activar a la empresa: " + nombre + " ?", "Activar", JOptionPane.YES_NO_OPTION) == 0) {
 
-                    if (cDAO.activar(Integer.parseInt(id))) {
+                    if (disDAO.activar(Integer.parseInt(id))) {
                         this.mensajeOk("Registro activado");
                         this.listar();
                     } else {
@@ -381,7 +324,7 @@ public class FrmClientes extends javax.swing.JInternalFrame {
                     }
                 }
             } else {
-                this.mensajeError("El cliente ya está ACTIVO");
+                this.mensajeError("El distribuidor ya está ACTIVO");
             }
         } else {
             this.mensajeError("Seleccione 1 registro a activar.");
@@ -389,14 +332,14 @@ public class FrmClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnActivarActionPerformed
 
     private void btnDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesactivarActionPerformed
-        if (tablaListadoClientes.getSelectedRowCount() == 1) {
-            String id = String.valueOf(tablaListadoClientes.getValueAt(tablaListadoClientes.getSelectedRow(), 0));
-            String nombre = String.valueOf(tablaListadoClientes.getValueAt(tablaListadoClientes.getSelectedRow(), 2));
-            String estado = String.valueOf(tablaListadoClientes.getValueAt(tablaListadoClientes.getSelectedRow(), 5));
+        if (tablaListadoDistribuidor.getSelectedRowCount() == 1) {
+            String id = String.valueOf(tablaListadoDistribuidor.getValueAt(tablaListadoDistribuidor.getSelectedRow(), 0));
+            String nombre = String.valueOf(tablaListadoDistribuidor.getValueAt(tablaListadoDistribuidor.getSelectedRow(), 2));
+            String estado = String.valueOf(tablaListadoDistribuidor.getValueAt(tablaListadoDistribuidor.getSelectedRow(), 6));
             if (!estado.equals("Inactivo")) {
-                if (JOptionPane.showConfirmDialog(this, "Deseas desactivar el cliente: " + nombre + " ?", "Desactivar", JOptionPane.YES_NO_OPTION) == 0) {
+                if (JOptionPane.showConfirmDialog(this, "Deseas desactivar la empresa: " + nombre + " ?", "Desactivar", JOptionPane.YES_NO_OPTION) == 0) {
 
-                    if (cDAO.eliminar(Integer.parseInt(id))) {
+                    if (disDAO.eliminar(Integer.parseInt(id))) {
                         this.mensajeOk("Registro desactivado");
                         this.listar();
                     } else {
@@ -404,7 +347,7 @@ public class FrmClientes extends javax.swing.JInternalFrame {
                     }
                 }
             } else {
-                this.mensajeError("El cliente ya está DESACTIVADO");
+                this.mensajeError("El distribuidor ya está DESACTIVADO");
             }
         } else {
             this.mensajeError("Seleccione 1 registro a activar.");
@@ -412,18 +355,15 @@ public class FrmClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnDesactivarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (tablaListadoClientes.getSelectedRowCount() == 1) {
-            String id = String.valueOf(tablaListadoClientes.getValueAt(tablaListadoClientes.getSelectedRow(), 0));
-            String rut = String.valueOf(tablaListadoClientes.getValueAt(tablaListadoClientes.getSelectedRow(), 1));
-            String nombre = String.valueOf(tablaListadoClientes.getValueAt(tablaListadoClientes.getSelectedRow(), 2));
-            String apellido = String.valueOf(tablaListadoClientes.getValueAt(tablaListadoClientes.getSelectedRow(), 3));
-            String fecha = String.valueOf(tablaListadoClientes.getValueAt(tablaListadoClientes.getSelectedRow(), 4));
+        if (tablaListadoDistribuidor.getSelectedRowCount() == 1) {
+            String id = String.valueOf(tablaListadoDistribuidor.getValueAt(tablaListadoDistribuidor.getSelectedRow(), 0));
+            Distribuidor distribuidor = disDAO.buscar(Integer.parseInt(id));
 
             txtId.setText(id);
-            txtNombre.setText(nombre);
-            txtRut.setText(rut);
-            txtApellido.setText(apellido);
-            txtFecha.setText(fecha);
+            txtNombre.setText(distribuidor.getNombreDis());
+            txtRut.setText(distribuidor.getRutDistribuidor());
+            txtDireccion.setText(distribuidor.getDireccion().getDireccion());
+            txtTelefono.setText(distribuidor.getTelefono().getNumTelf());
 
             tabGeneral.setEnabledAt(0, false);
             tabGeneral.setEnabledAt(1, true);
@@ -440,25 +380,13 @@ public class FrmClientes extends javax.swing.JInternalFrame {
         tabGeneral.setEnabledAt(0, true);
         tabGeneral.setEnabledAt(1, false);
         tabGeneral.setSelectedIndex(0);
-        txtCorreo.setVisible(false);
-        txtDireccion.setVisible(false);
-        txtTelefono.setVisible(false);
-        lblCorreo.setVisible(false);
-        lblTelefono.setVisible(false);
-        lblDireccion.setVisible(false);
-        this.limpiar();
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        Cliente cl;
+        Distribuidor dis;
         if (txtNombre.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese un nombre válido", "System", JOptionPane.WARNING_MESSAGE);
             txtNombre.requestFocus();
-            return;
-        }
-        if (txtApellido.getText().length() == 0) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un apellido válido", "System", JOptionPane.WARNING_MESSAGE);
-            txtApellido.requestFocus();
             return;
         }
         if (txtRut.getText().length() == 0) {
@@ -466,86 +394,78 @@ public class FrmClientes extends javax.swing.JInternalFrame {
             txtRut.requestFocus();
             return;
         }
-
+        if (txtTelefono.getText().length() > 9 || txtTelefono.getText().length() < 9) {
+            JOptionPane.showMessageDialog(this, "El número de telefono no puede ser superior o inferior a 9 digitos", "System", JOptionPane.WARNING_MESSAGE);
+            txtTelefono.requestFocus();
+            return;
+        }
+        if (txtDireccion.getText().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese una Direccion válida", "System", JOptionPane.WARNING_MESSAGE);
+            txtDireccion.requestFocus();
+            return;
+        }
         if (this.accion.equals("editar")) {
             int id = Integer.parseInt(txtId.getText());
             String rut = txtRut.getText();
             String nombre = txtNombre.getText();
-            String apellido = txtApellido.getText();
-            String fecha = txtFecha.getText();
+            String direccion = txtDireccion.getText();
+            String telefono = txtTelefono.getText();
 
-            cl = new Cliente(id, rut, nombre, apellido, fecha);
+            dis = disDAO.buscar(id);
+            Telefono tlf = new Telefono(dis.getTelefono().getIdTelefono(), telefono);
+            Direccion direcc = new Direccion(dis.getDireccion().getIdDireccion(), direccion);
 
-            if (cDAO.modificar(cl)) {
-                this.mensajeOk("Cliente actualizado existosamente");
+            dis.setNombreDis(nombre);
+            dis.setRutDistribuidor(rut);
+
+            if (disDAO.modificar(dis) && tlfDAO.modificar(tlf) && dDAO.modificar(direcc)) {
+                this.mensajeOk("Distribuidor actualizado existosamente");
                 this.limpiar();
                 this.listar();
-                txtCorreo.setVisible(false);
-                txtDireccion.setVisible(false);
-                txtTelefono.setVisible(false);
-                lblCorreo.setVisible(false);
-                lblTelefono.setVisible(false);
-                lblDireccion.setVisible(false);
                 tabGeneral.setEnabledAt(0, true);
                 tabGeneral.setEnabledAt(1, false);
                 tabGeneral.setSelectedIndex(0);
             } else {
-                this.mensajeError("Ocurrió un error, el cliente no fue actualizado");
+                this.mensajeError("Ocurrió un error, el distribuidor no fue actualizad");
             }
 
         } else {
 
-            if (txtDireccion.getText().length() == 0) {
-                JOptionPane.showMessageDialog(this, "Por favor, ingrese una Direccion válida", "System", JOptionPane.WARNING_MESSAGE);
-                txtDireccion.requestFocus();
-                return;
-            }
-            if (txtCorreo.getText().length() == 0) {
-                JOptionPane.showMessageDialog(this, "Por favor, ingrese un correo válido", "System", JOptionPane.WARNING_MESSAGE);
-                txtCorreo.requestFocus();
-                return;
-            }
-            if (txtTelefono.getText().length() > 9 || txtTelefono.getText().length() < 9) {
-                JOptionPane.showMessageDialog(this, "El número de telefono no puede ser superior o inferior a 9 digitos", "System", JOptionPane.WARNING_MESSAGE);
-                txtTelefono.requestFocus();
-                return;
-            }
-
             String rut = txtRut.getText();
             String nombre = txtNombre.getText();
-            String apellido = txtApellido.getText();
-            String correo = txtCorreo.getText();
             String direccion = txtDireccion.getText();
             String telefono = txtTelefono.getText();
-            String fecha = txtFecha.getText();
 
-            Correo cor = new Correo(correo);
             Direccion diec = new Direccion(direccion);
             Telefono tlf = new Telefono(telefono);
 
-            cl = new Cliente(rut, nombre, apellido, fecha, tlf, diec, cor);
-
-            if (cDAO.insertar(cl)) {
-                this.mensajeOk("Cliente añadido existosamente");
-                this.limpiar();
-                this.listar();
-                txtCorreo.setVisible(false);
-                txtDireccion.setVisible(false);
-                txtTelefono.setVisible(false);
-                lblCorreo.setVisible(false);
-                lblTelefono.setVisible(false);
-                lblDireccion.setVisible(false);
-                tabGeneral.setEnabledAt(0, true);
-                tabGeneral.setEnabledAt(1, false);
-                tabGeneral.setSelectedIndex(0);
+            int idDireccion = dDAO.insertarID(diec);
+            int idTlf = tlfDAO.insertarID(tlf);
+            if (idDireccion != 0 && idTlf != 0) {
+                diec.setIdDireccion(idDireccion);
+                tlf.setIdTelefono(idTlf);
+                dis = new Distribuidor(nombre, rut, tlf, diec);
+                System.out.println(dis);
+                if (disDAO.insertar(dis)) {
+                    this.mensajeOk("Distribuidor añadido existosamente");
+                    this.limpiar();
+                    this.listar();
+                    tabGeneral.setEnabledAt(0, true);
+                    tabGeneral.setEnabledAt(1, false);
+                    tabGeneral.setSelectedIndex(0);
+                } else {
+                    this.mensajeError("Ocurrio un error al agregar al distribuidor");
+                }
             } else {
-                this.mensajeError("Ocurrió error, el cliente no pude ser agregado");
+                this.mensajeError("Ocurrio un error al intentar agregar el telefono y la direccion");
             }
         }
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Dirección;
     private javax.swing.JButton btnActivar;
     private javax.swing.JButton btnDesactivar;
     private javax.swing.JButton btnEditar;
@@ -556,20 +476,12 @@ public class FrmClientes extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblCorreo;
-    private javax.swing.JLabel lblDireccion;
-    private javax.swing.JLabel lblTelefono;
     private javax.swing.JTabbedPane tabGeneral;
-    private javax.swing.JTable tablaListadoClientes;
-    private javax.swing.JTextField txtApellido;
-    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTable tablaListadoDistribuidor;
     private javax.swing.JTextField txtDireccion;
-    private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtRut;

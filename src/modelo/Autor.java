@@ -25,17 +25,17 @@ public class Autor {
         this.nombreAutor = nombreAutor;
         this.apellidoPaterno = apellidoPaterno;
     }
-    
-    public Autor(int idAutor, String nombreAutor){
+
+    public Autor(int idAutor, String nombreAutor) {
         this.idAutor = idAutor;
         this.nombreAutor = nombreAutor;
     }
-    
+
     public Autor(String nombreAutor) {
         this.nombreAutor = nombreAutor;
     }
-    
-    public Autor(String nombreAutor, String apellidoPatero){
+
+    public Autor(String nombreAutor, String apellidoPatero) {
         this.nombreAutor = nombreAutor;
         this.apellidoPaterno = apellidoPatero;
     }
@@ -66,8 +66,8 @@ public class Autor {
 
     @Override
     public String toString() {
-        return  nombreAutor + " " + apellidoPaterno;
-    } 
+        return nombreAutor + " " + apellidoPaterno;
+    }
 
     @Override
     public int hashCode() {
@@ -101,7 +101,5 @@ public class Autor {
         }
         return true;
     }
-    
-    
 
 }

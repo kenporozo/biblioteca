@@ -17,8 +17,8 @@ import modelo.Trabajador;
  *
  * @author Usuario
  */
-public class TrabajadorDAO extends DAO implements IDAO{
-    
+public class TrabajadorDAO extends DAO implements IDAO {
+
     private static final String SQL_INSERT_TRABAJADOR_CORREO = "INSERT INTO rel_correo_trabajador(id_trabajador, id_correo) VALUES (?, ?)";
     private static final String SQL_INSERT_TRABAJADOR_DIRECCION = "INSERT INTO rel_direcc_trabajador(id_trabajador, id_direccion) VALUES (?, ?)";
     private static final String SQL_INSERT_TRABAJADOR_TLF = "INSERT INTO rel_tlf_trabajador(id_trabajador, id_telefono) VALUES (?, ?)";
@@ -29,6 +29,12 @@ public class TrabajadorDAO extends DAO implements IDAO{
     private static final String SQL_UPDATE = "UPDATE trabajador SET rut_trabajador = ?, nombre_trabajador = ?, apellido_trabajador = ? WHERE id_trabajador = ?";
     private static final String SQL_DELETE = "UPDATE trabajador SET id_estado_entidad = 2 WHERE id_trabajador = ?";
 
+    /**
+     * Metodo que sirve para listar informacion de la base de datos
+     *
+     * @return ArrayList de objetos 
+     *
+     */
     @Override
     public ArrayList<Object> getList() {
         Connection conn = null;
@@ -61,6 +67,14 @@ public class TrabajadorDAO extends DAO implements IDAO{
         return list;
     }
 
+    /**
+     * Metodo cuya funcionalidad es agregar objetos a la base de datos
+     * dependiendo de su clase
+     *
+     * @param obj objeto
+     * @return Devuelve un booelean
+     *
+     */
     @Override
     public boolean insertar(Object obj) {
         Connection conn = null;
@@ -71,55 +85,53 @@ public class TrabajadorDAO extends DAO implements IDAO{
         CorreoDAO cDAO = new CorreoDAO();
         DireccionDAO dDAO = new DireccionDAO();
         try {
-            //conn.setAutoCommit(false);
             conn = getConnection();
-            stmt = conn.prepareStatement(SQL_INSERT,  Statement.RETURN_GENERATED_KEYS);
+            stmt = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, trabajador.getIdBiblioteca());
             stmt.setString(2, trabajador.getRut());
             stmt.setString(3, trabajador.getNombre());
             stmt.setString(4, trabajador.getApellido());
             stmt.executeUpdate();
-            
+
             ResultSet keys = stmt.getGeneratedKeys();
             keys.next();
             int id = keys.getInt(1);
             stmt.close();
-            
+
             int idTelefono = tDAO.insertarID(trabajador.getTelefono());
             int idDireccion = dDAO.insertarID(trabajador.getDireccion());
             int idCorreo = cDAO.insertarID(trabajador.getCorreo());
-            
-            if(idTelefono > 0 && idDireccion > 0 && idCorreo > 0 && id > 0){
-            
-            stmt = conn.prepareStatement(SQL_INSERT_TRABAJADOR_TLF);
-            stmt.setInt(1, id);
-            stmt.setInt(2, idTelefono);
-            stmt.executeUpdate();
-            stmt.close();
-            System.out.println("Inserto el telefono relacionado al trabajador");
-            
-            stmt = conn.prepareStatement(SQL_INSERT_TRABAJADOR_CORREO);
-            stmt.setInt(1, id);
-            stmt.setInt(2, idCorreo);
-            stmt.executeUpdate();
-            stmt.close();
-            System.out.println("Inserto el correo relacionado al trabajador");
-            
-            stmt = conn.prepareStatement(SQL_INSERT_TRABAJADOR_DIRECCION);
-            stmt.setInt(1, id);
-            stmt.setInt(2, idDireccion);
-            stmt.executeUpdate();
-            stmt.close();
-            System.out.println("Inserto la direccion relacionada al trabajador");
-  
-            estado = true;
-            System.out.println("Inserto el trabajador");
-            //conn.commit();
-            }else{
+
+            if (idTelefono > 0 && idDireccion > 0 && idCorreo > 0 && id > 0) {
+
+                stmt = conn.prepareStatement(SQL_INSERT_TRABAJADOR_TLF);
+                stmt.setInt(1, id);
+                stmt.setInt(2, idTelefono);
+                stmt.executeUpdate();
+                stmt.close();
+                System.out.println("Inserto el telefono relacionado al trabajador");
+
+                stmt = conn.prepareStatement(SQL_INSERT_TRABAJADOR_CORREO);
+                stmt.setInt(1, id);
+                stmt.setInt(2, idCorreo);
+                stmt.executeUpdate();
+                stmt.close();
+                System.out.println("Inserto el correo relacionado al trabajador");
+
+                stmt = conn.prepareStatement(SQL_INSERT_TRABAJADOR_DIRECCION);
+                stmt.setInt(1, id);
+                stmt.setInt(2, idDireccion);
+                stmt.executeUpdate();
+                stmt.close();
+                System.out.println("Inserto la direccion relacionada al trabajador");
+
+                estado = true;
+                System.out.println("Inserto el trabajador");
+            } else {
                 conn.rollback();
             }
         } catch (SQLException ex) {
-            if(conn != null){
+            if (conn != null) {
                 try {
                     conn.rollback();
                 } catch (SQLException ex1) {
@@ -134,6 +146,12 @@ public class TrabajadorDAO extends DAO implements IDAO{
         return estado;
     }
 
+    /**
+     * Metodo encargado de modificar objetos en la base de datos
+     *
+     * @param obj object
+     * @return boolean
+     */
     @Override
     public boolean modificar(Object obj) {
         Connection conn = null;
@@ -161,6 +179,14 @@ public class TrabajadorDAO extends DAO implements IDAO{
         return estado;
     }
 
+    /**
+     * Metodo que sirve para eliminar o cambiar el estado de los objetos en la
+     * base de datos
+     *
+     * @param id int
+     * @return boolean
+     *
+     */
     @Override
     public boolean eliminar(int id) {
         Connection conn = null;
@@ -182,6 +208,12 @@ public class TrabajadorDAO extends DAO implements IDAO{
         return estado;
     }
 
+    /**
+     * Metodo que se encargar de buscar objetos de la base de datos
+     *
+     * @param id int
+     * @return object
+     */
     @Override
     public Object buscar(int id) {
         Connection conn = null;
@@ -215,13 +247,19 @@ public class TrabajadorDAO extends DAO implements IDAO{
             close(conn);
         }
     }
-    
-    public boolean activar(int id){
+
+    /**
+     * Metodo que sirve para activar objetos de la base de datos
+     *
+     * @param id int
+     * @return boolean
+     */
+    public boolean activar(int id) {
         Connection conn = null;
         PreparedStatement stmt = null;
         boolean estado = false;
-        
-         try {
+
+        try {
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_ACTIVAR);
             stmt.setInt(1, id);

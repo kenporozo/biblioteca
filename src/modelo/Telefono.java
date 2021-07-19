@@ -46,5 +46,5 @@ public class Telefono {
     public String toString() {
         return "Telefono " + idTelefono + ", " + numTelf;
     }
- 
+
 }

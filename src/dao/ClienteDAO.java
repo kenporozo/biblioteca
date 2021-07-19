@@ -29,6 +29,12 @@ public class ClienteDAO extends DAO implements IDAO {
     private static final String SQL_UPDATE = "UPDATE cliente SET rut_cliente = ?, nombre_cliente = ?, apellido_cliente = ? WHERE id_cliente = ?";
     private static final String SQL_DELETE = "UPDATE cliente SET id_estado_entidad = 2 WHERE id_cliente = ?";
 
+    /**
+     * Metodo que sirve para listar informacion de la base de datos
+     *
+     * @return ArrayList de objetos 
+     *
+     */
     @Override
     public ArrayList<Object> getList() {
         Connection conn = null;
@@ -61,6 +67,14 @@ public class ClienteDAO extends DAO implements IDAO {
         return list;
     }
 
+    /**
+     * Metodo cuya funcionalidad es agregar objetos a la base de datos
+     * dependiendo de su clase
+     *
+     * @param obj objeto
+     * @return booelean
+     *
+     */
     @Override
     public boolean insertar(Object obj) {
         Connection conn = null;
@@ -134,6 +148,12 @@ public class ClienteDAO extends DAO implements IDAO {
         return estado;
     }
 
+    /**
+     * Metodo encargado de modificar objetos en la base de datos
+     *
+     * @param obj objeto
+     * @return boolean
+     */
     @Override
     public boolean modificar(Object obj) {
         Connection conn = null;
@@ -161,6 +181,14 @@ public class ClienteDAO extends DAO implements IDAO {
         return estado;
     }
 
+    /**
+     * Metodo que sirve para eliminar o cambiar el estado de los objetos en la
+     * base de datos
+     *
+     * @param id int
+     * @return boolean
+     *
+     */
     @Override
     public boolean eliminar(int id) {
         Connection conn = null;
@@ -182,6 +210,12 @@ public class ClienteDAO extends DAO implements IDAO {
         return estado;
     }
 
+    /**
+     * Metodo que se encargar de buscar objetos de la base de datos
+     *
+     * @param id int
+     * @return object
+     */
     @Override
     public Object buscar(int id) {
         Connection conn = null;
@@ -216,6 +250,12 @@ public class ClienteDAO extends DAO implements IDAO {
         }
     }
 
+    /**
+     * Metodo que sirve para activar objetos de la base de datos
+     *
+     * @param id int
+     * @return boolean
+     */
     public boolean activar(int id) {
         Connection conn = null;
         PreparedStatement stmt = null;

@@ -12,6 +12,7 @@ import java.util.Objects;
  * @author Usuario
  */
 public class Cliente {
+
     private int idCliente;
     private String nombre;
     private String apellido;
@@ -25,7 +26,7 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(int idCliente, String rut,String nombre, String apellido, Telefono telefono) {
+    public Cliente(int idCliente, String rut, String nombre, String apellido, Telefono telefono) {
         this.idCliente = idCliente;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -33,7 +34,28 @@ public class Cliente {
         this.telefono = telefono;
     }
 
-    public Cliente(String rut,String nombre, String apellido, String fechaNacimiento, Telefono telefono, Direccion direccion, Correo correo) {
+    public Cliente(int idCliente, String nombre) {
+        this.idCliente = idCliente;
+        this.nombre = nombre;
+    }
+
+    public Cliente(int idCliente, String rut, String nombre, String apellido, Direccion direccion) {
+        this.idCliente = idCliente;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.rut = rut;
+        this.direccion = direccion;
+    }
+
+    public Cliente(int idCliente, String rut, String nombre, String apellido, Correo correo) {
+        this.idCliente = idCliente;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.rut = rut;
+        this.correo = correo;
+    }
+
+    public Cliente(String rut, String nombre, String apellido, String fechaNacimiento, Telefono telefono, Direccion direccion, Correo correo) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.rut = rut;
@@ -43,17 +65,15 @@ public class Cliente {
         this.correo = correo;
     }
 
-    public Cliente(int idCliente,String rut, String nombre, String apellido,  String fechaNacimiento) {
+    public Cliente(int idCliente, String rut, String nombre, String apellido, String fechaNacimiento) {
         this.idCliente = idCliente;
         this.nombre = nombre;
         this.apellido = apellido;
         this.rut = rut;
         this.fechaNacimiento = fechaNacimiento;
     }
-    
-    
 
-    public Cliente(int idCliente, String rut,String nombre, String apellido, int estado, String fechaNacimiento) {
+    public Cliente(int idCliente, String rut, String nombre, String apellido, int estado, String fechaNacimiento) {
         this.idCliente = idCliente;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -139,9 +159,6 @@ public class Cliente {
         return idCliente + " " + nombre;
     }
 
-    
-    
-    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -198,8 +215,5 @@ public class Cliente {
         }
         return true;
     }
-    
-    
-    
-    
+
 }

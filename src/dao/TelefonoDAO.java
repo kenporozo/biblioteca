@@ -43,6 +43,12 @@ public class TelefonoDAO extends DAO implements IDAO {
 
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM telefono WHERE id_telefono = ?";
 
+    /**
+     * Metodo que sirve para listar informacion de la base de datos
+     *
+     * @return ArrayList de objetos 
+     *
+     */
     @Override
     public ArrayList<Object> getList() {
         Connection conn = null;
@@ -70,6 +76,12 @@ public class TelefonoDAO extends DAO implements IDAO {
         return list;
     }
 
+    /**
+     * Metodo que sirve para listar informacion de la base de datos
+     *
+     * @return ArrayList de objetos 
+     *
+     */
     public ArrayList<Object> getListTrabajadores() {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -100,6 +112,12 @@ public class TelefonoDAO extends DAO implements IDAO {
         return list;
     }
 
+    /**
+     * Metodo que sirve para listar informacion de la base de datos
+     *
+     * @return ArrayList de objetos 
+     *
+     */
     public ArrayList<Object> getListClientes() {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -130,6 +148,15 @@ public class TelefonoDAO extends DAO implements IDAO {
         return list;
     }
 
+    /**
+     * Metodo cuya funcionalidad es agregar objetos a la base de datos
+     * dependiendo de su clase
+     *
+     * @param idTelefono parametro necesario para buscar en la base de datos
+     * @param idTrabajador parametro necesario para buscar en la base de datos
+     * @return booelean
+     *
+     */
     public boolean insertarTlfTrabajador(int idTelefono, int idTrabajador) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -152,6 +179,15 @@ public class TelefonoDAO extends DAO implements IDAO {
         return estado;
     }
 
+    /**
+     * Metodo cuya funcionalidad es agregar objetos a la base de datos
+     * dependiendo de su clase
+     *
+     * @param idTelefono parametro necesario para buscar en la base de datos
+     * @param idCliente parametro necesario para buscar en la base de datos
+     * @return booelean
+     *
+     */
     public boolean insertarTlfCliente(int idTelefono, int idCliente) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -174,6 +210,10 @@ public class TelefonoDAO extends DAO implements IDAO {
         return estado;
     }
 
+    /**
+     * @param telefono object
+     * @return int
+     */
     public int insertarID(Telefono telefono) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -200,6 +240,14 @@ public class TelefonoDAO extends DAO implements IDAO {
         return id;
     }
 
+    /**
+     * Metodo cuya funcionalidad es agregar objetos a la base de datos
+     * dependiendo de su clase
+     *
+     * @param obj objeto
+     * @return Devuelve un booelean
+     *
+     */
     @Override
     public boolean insertar(Object obj) {
         Connection conn = null;
@@ -222,6 +270,12 @@ public class TelefonoDAO extends DAO implements IDAO {
         return estado;
     }
 
+    /**
+     * Metodo encargado de modificar objetos en la base de datos
+     *
+     * @param obj objeto
+     * @return boolean
+     */
     @Override
     public boolean modificar(Object obj) {
         Connection conn = null;
@@ -247,6 +301,14 @@ public class TelefonoDAO extends DAO implements IDAO {
         return estado;
     }
 
+    /**
+     * Metodo que sirve para eliminar o cambiar el estado de los objetos en la
+     * base de datos
+     *
+     * @param idTelefono int
+     * @return boolean
+     *
+     */
     @Override
     public boolean eliminar(int idTelefono) {
         Connection conn = null;
@@ -274,8 +336,16 @@ public class TelefonoDAO extends DAO implements IDAO {
         return estado;
 
     }
-    
-        public boolean eliminarCl(int idTelefono) {
+
+    /**
+     * Metodo que sirve para eliminar o cambiar el estado de los objetos en la
+     * base de datos
+     *
+     * @param idTelefono int
+     * @return boolean
+     *
+     */
+    public boolean eliminarCl(int idTelefono) {
         Connection conn = null;
         PreparedStatement stmt = null;
         Boolean estado = false;
@@ -302,6 +372,12 @@ public class TelefonoDAO extends DAO implements IDAO {
 
     }
 
+    /**
+     * Metodo que se encargar de buscar objetos de la base de datos
+     *
+     * @param idTelefono int
+     * @return object
+     */
     @Override
     public Object buscar(int idTelefono) {
         Connection conn = null;

@@ -17,7 +17,7 @@ import modelo.*;
  *
  * @author Usuario
  */
-public class LibroDAO extends DAO implements IDAO{
+public class LibroDAO extends DAO implements IDAO {
 
     private static final String SQL_INSERT = "INSERT INTO libro (isbn, titulo, cant_paginas, fecha_publicacion, precio, id_idioma, id_editorial)VALUES(?, ?, ?, ?, ?, ?, ?)";
 
@@ -38,11 +38,17 @@ public class LibroDAO extends DAO implements IDAO{
     private static final String SQL_UPDATE_CATEGORIA_LIBRO = "UPDATE categoria_libro SET id_categoria = ? WHERE id_libro = ?";
 
     private static final String SQL_UPDATE_INVENTARIO = "UPDATE inventario SET id_estado = ? WHERE id_libro = ?";
-    
+
     private static final String SQL_DELETE = "UPDATE inventario SET id_estado = 4 WHERE id_libro = ?";
-    
+
     private static final String SQL_ACTIVAR = "UPDATE inventario SET id_estado = 3 WHERE id_libro = ?";
 
+    /**
+     * Metodo que sirve para listar informacion de la base de datos
+     *
+     * @return ArrayList de objetos 
+     *
+     */
     @Override
     public ArrayList<Object> getList() {
         Connection conn = null;
@@ -90,6 +96,14 @@ public class LibroDAO extends DAO implements IDAO{
         return list;
     }
 
+    /**
+     * Metodo cuya funcionalidad es agregar objetos a la base de datos
+     * dependiendo de su clase
+     *
+     * @param obj object
+     * @return Devuelve un booelean
+     *
+     */
     @Override
     public boolean insertar(Object obj) {
         Connection conn = null;
@@ -112,7 +126,7 @@ public class LibroDAO extends DAO implements IDAO{
             keys.next();
             int id = keys.getInt(1);
 
-           // libro.setIdLibro(id);
+            // libro.setIdLibro(id);
             stmt.close();
 
             stmt = conn.prepareStatement(SQL_INSERT_AUTOR_LIBRO);
@@ -145,6 +159,12 @@ public class LibroDAO extends DAO implements IDAO{
         return estado;
     }
 
+    /**
+     * Metodo encargado de modificar objetos en la base de datos
+     *
+     * @param obj object
+     * @return boolean
+     */
     @Override
     public boolean modificar(Object obj) {
         Connection conn = null;
@@ -195,6 +215,12 @@ public class LibroDAO extends DAO implements IDAO{
         return estado;
     }
 
+    /**
+     * Metodo que se encargar de buscar objetos de la base de datos
+     *
+     * @param idLibro int 
+     * @return object
+     */
     @Override
     public Libro buscar(int idLibro) {
         Connection conn = null;
@@ -206,7 +232,7 @@ public class LibroDAO extends DAO implements IDAO{
             EditorialDAO editorialDAO = new EditorialDAO();
             CategoriaDAO categoriaDAO = new CategoriaDAO();
             AutorDAO autorDAO = new AutorDAO();
-            
+
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
 
@@ -247,14 +273,22 @@ public class LibroDAO extends DAO implements IDAO{
         }
 
     }
-    
+
+    /**
+     * Metodo que sirve para eliminar o cambiar el estado de los objetos en la
+     * base de datos
+     *
+     * @param id int
+     * @return boolean
+     *
+     */
     @Override
-    public boolean eliminar(int id){
+    public boolean eliminar(int id) {
         Connection conn = null;
         PreparedStatement stmt = null;
         boolean estado = false;
-        
-         try {
+
+        try {
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_DELETE);
             stmt.setInt(1, id);
@@ -270,13 +304,19 @@ public class LibroDAO extends DAO implements IDAO{
         }
         return estado;
     }
-    
-     public boolean activar(int id){
+
+    /**
+     * Metodo que sirve para activar objetos de la base de datos
+     *
+     * @param id int
+     * @return boolean
+     */
+    public boolean activar(int id) {
         Connection conn = null;
         PreparedStatement stmt = null;
         boolean estado = false;
-        
-         try {
+
+        try {
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_ACTIVAR);
             stmt.setInt(1, id);

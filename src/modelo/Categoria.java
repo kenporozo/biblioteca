@@ -12,14 +12,15 @@ import java.util.Objects;
  * @author Usuario
  */
 public class Categoria {
+
     private int idCategoria;
     private String nombreCategoria;
 
     public Categoria(String nombreCategoria) {
         this.nombreCategoria = nombreCategoria;
     }
-    
-    public Categoria(int idCategoria, String nombreCategoria){
+
+    public Categoria(int idCategoria, String nombreCategoria) {
         this.idCategoria = idCategoria;
         this.nombreCategoria = nombreCategoria;
     }
@@ -45,7 +46,7 @@ public class Categoria {
 
     @Override
     public String toString() {
-        return  nombreCategoria;
+        return nombreCategoria;
     }
 
     @Override
@@ -76,6 +77,5 @@ public class Categoria {
         }
         return true;
     }
-    
-    
+
 }

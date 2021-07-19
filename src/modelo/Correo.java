@@ -10,6 +10,7 @@ package modelo;
  * @author Usuario
  */
 public class Correo {
+
     private int idCorreo;
     private String correo;
 
@@ -42,5 +43,5 @@ public class Correo {
     public String toString() {
         return "Correo" + idCorreo + ", " + correo;
     }
-    
+
 }

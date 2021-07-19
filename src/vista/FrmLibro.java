@@ -182,6 +182,7 @@ public class FrmLibro extends javax.swing.JInternalFrame {
         txtId = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
@@ -308,62 +309,69 @@ public class FrmLibro extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel10.setText("(*) Indica campo obligatorio");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtId)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel5))
-                .addGap(42, 42, 42)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                        .addComponent(txtIsbn))
-                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(cboCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(33, 33, 33))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtFecha)
-                            .addComponent(txtCantPag, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(43, 43, 43)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(cboAutores, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addComponent(cboEditoriales, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(18, 18, 18)
-                        .addComponent(cboIdiomas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(220, 220, 220)
                 .addComponent(btnGuardar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnVolver)
                 .addGap(223, 223, 223))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtId)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5))
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                                .addComponent(txtIsbn))
+                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(cboCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(33, 33, 33))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtFecha)
+                                    .addComponent(txtCantPag, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(43, 43, 43)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(cboAutores, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(cboEditoriales, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(cboIdiomas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(344, 344, 344)
+                        .addComponent(jLabel10)))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -399,7 +407,9 @@ public class FrmLibro extends javax.swing.JInternalFrame {
                             .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9)
                             .addComponent(cboIdiomas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnVolver))
@@ -451,10 +461,10 @@ public class FrmLibro extends javax.swing.JInternalFrame {
             txtPrecio.setText(String.valueOf(libro.getPrecio()));
             txtTitulo.setText(libro.getTitulo());
             cboCategorias.setSelectedItem(new Categoria(libro.getCategoria().getIdCategoria(), libro.getCategoria().getNombreCategoria()));
-            if(libro.getAutor().getApellidoPaterno() == null){
-            cboAutores.setSelectedItem(new Autor(libro.getAutor().getIdAutor(), libro.getAutor().getNombreAutor()));
-            }else{
-             cboAutores.setSelectedItem(new Autor(libro.getAutor().getIdAutor(), libro.getAutor().getNombreAutor(), libro.getAutor().getApellidoPaterno()));
+            if (libro.getAutor().getApellidoPaterno() == null) {
+                cboAutores.setSelectedItem(new Autor(libro.getAutor().getIdAutor(), libro.getAutor().getNombreAutor()));
+            } else {
+                cboAutores.setSelectedItem(new Autor(libro.getAutor().getIdAutor(), libro.getAutor().getNombreAutor(), libro.getAutor().getApellidoPaterno()));
             }
             cboEditoriales.setSelectedItem(new Editorial(libro.getEditorial().getIdEditorial(), libro.getEditorial().getNombreEditorial()));
             cboIdiomas.setSelectedItem(new Idioma(libro.getIdioma().getIdIdioma(), libro.getIdioma().getIdioma()));
@@ -479,23 +489,23 @@ public class FrmLibro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-    
+
         if (txtTitulo.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese un titulo válido", "System", JOptionPane.WARNING_MESSAGE);
             txtTitulo.requestFocus();
             return;
         }
-          if (txtPrecio.getText().length() == 0) {
+        if (txtPrecio.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese un precio", "System", JOptionPane.WARNING_MESSAGE);
             txtPrecio.requestFocus();
             return;
         }
-            if (txtCantPag.getText().length() == 0) {
+        if (txtCantPag.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese una cantidad válida", "System", JOptionPane.WARNING_MESSAGE);
             txtCantPag.requestFocus();
             return;
         }
-              if (txtIsbn.getText().length() == 0) {
+        if (txtIsbn.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese un ISBN valido", "System", JOptionPane.WARNING_MESSAGE);
             txtIsbn.requestFocus();
             return;
@@ -513,14 +523,14 @@ public class FrmLibro extends javax.swing.JInternalFrame {
             Autor autor = (Autor) cboAutores.getSelectedItem();
             Editorial editorial = (Editorial) cboEditoriales.getSelectedItem();
             Libro libro = new Libro(id, isbn, Titulo, pag, fecha, precio, idioma, editorial, categoria, autor, 3);
-            if(lDAO.modificar(libro)){
+            if (lDAO.modificar(libro)) {
                 this.mensajeOk("Libro actualizado existosamente");
                 this.limpiar();
                 this.listar();
                 tabGeneral.setEnabledAt(0, true);
                 tabGeneral.setEnabledAt(1, false);
                 tabGeneral.setSelectedIndex(0);
-            }else{
+            } else {
                 this.mensajeError("Ocurrió un error, el libro no fue actualizada");
             }
 
@@ -549,21 +559,21 @@ public class FrmLibro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarActionPerformed
-         if (tablaListadoLibros.getSelectedRowCount() == 1) {
-            String id= String.valueOf(tablaListadoLibros.getValueAt(tablaListadoLibros.getSelectedRow(),0));
-            String titulo= String.valueOf(tablaListadoLibros.getValueAt(tablaListadoLibros.getSelectedRow(),2));
+        if (tablaListadoLibros.getSelectedRowCount() == 1) {
+            String id = String.valueOf(tablaListadoLibros.getValueAt(tablaListadoLibros.getSelectedRow(), 0));
+            String titulo = String.valueOf(tablaListadoLibros.getValueAt(tablaListadoLibros.getSelectedRow(), 2));
             String estado = String.valueOf(tablaListadoLibros.getValueAt(tablaListadoLibros.getSelectedRow(), 10));
-            if(!estado.equals("Disponible")){
-            if(JOptionPane.showConfirmDialog(this,"Deseas activar el registro: " + titulo + " ?", "Activar", JOptionPane.YES_NO_OPTION)==0){
-            
-                if (lDAO.activar(Integer.parseInt(id))){
-                    this.mensajeOk("Registro activado");
-                     this.listar();
-                }else{
-                    this.mensajeError("Error, el regristro no pudo ser activado");
+            if (!estado.equals("Disponible")) {
+                if (JOptionPane.showConfirmDialog(this, "Deseas activar el registro: " + titulo + " ?", "Activar", JOptionPane.YES_NO_OPTION) == 0) {
+
+                    if (lDAO.activar(Integer.parseInt(id))) {
+                        this.mensajeOk("Registro activado");
+                        this.listar();
+                    } else {
+                        this.mensajeError("Error, el regristro no pudo ser activado");
+                    }
                 }
-            }
-            }else{
+            } else {
                 this.mensajeError("El libro ya está DISPONIBLE");
             }
         } else {
@@ -573,23 +583,23 @@ public class FrmLibro extends javax.swing.JInternalFrame {
 
     private void btnDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesactivarActionPerformed
         if (tablaListadoLibros.getSelectedRowCount() == 1) {
-            String id= String.valueOf(tablaListadoLibros.getValueAt(tablaListadoLibros.getSelectedRow(),0));
-            String titulo= String.valueOf(tablaListadoLibros.getValueAt(tablaListadoLibros.getSelectedRow(),2));
-             String estado = String.valueOf(tablaListadoLibros.getValueAt(tablaListadoLibros.getSelectedRow(), 10));
-             if(!estado.equals("No disponible")){
-            
-            if(JOptionPane.showConfirmDialog(this,"Deseas desactiva el registro: " + titulo + " ?", "Desactivar", JOptionPane.YES_NO_OPTION)==0){
-            
-                if (lDAO.eliminar(Integer.parseInt(id))){
-                    this.mensajeOk("Registro desactivado");
-                     this.listar();
-                }else{
-                    this.mensajeError("Error, el regristro no pudo ser desactivado");
+            String id = String.valueOf(tablaListadoLibros.getValueAt(tablaListadoLibros.getSelectedRow(), 0));
+            String titulo = String.valueOf(tablaListadoLibros.getValueAt(tablaListadoLibros.getSelectedRow(), 2));
+            String estado = String.valueOf(tablaListadoLibros.getValueAt(tablaListadoLibros.getSelectedRow(), 10));
+            if (!estado.equals("No disponible")) {
+
+                if (JOptionPane.showConfirmDialog(this, "Deseas desactiva el registro: " + titulo + " ?", "Desactivar", JOptionPane.YES_NO_OPTION) == 0) {
+
+                    if (lDAO.eliminar(Integer.parseInt(id))) {
+                        this.mensajeOk("Registro desactivado");
+                        this.listar();
+                    } else {
+                        this.mensajeError("Error, el regristro no pudo ser desactivado");
+                    }
                 }
+            } else {
+                this.mensajeError("El libro ya tiene estado NO DISPONIBLE");
             }
-             }else{
-                 this.mensajeError("El libro ya tiene estado NO DISPONIBLE");
-             }
         } else {
             this.mensajeError("Seleccione 1 registro a desactivar.");
         }
@@ -608,6 +618,7 @@ public class FrmLibro extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cboEditoriales;
     private javax.swing.JComboBox<String> cboIdiomas;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

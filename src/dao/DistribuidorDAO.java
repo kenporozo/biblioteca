@@ -22,14 +22,20 @@ public class DistribuidorDAO extends DAO implements IDAO {
 
     private static final String SQL_SELECT = "SELECT * FROM distribuidor ORDER BY id_distribuidor";
 
-    private static final String SQL_UPDATE = "UPDATE distribuidor SET empresa = ? rut_distribuidor = ?, id_direccion = ?, id_telefono = ? WHERE id_distribuidor = ?";
+    private static final String SQL_UPDATE = "UPDATE distribuidor SET empresa = ?, rut_distribuidor = ? WHERE id_distribuidor = ?";
 
     private static final String SQL_DELETE = "UPDATE distribuidor SET id_entidad_estado = 2 WHERE id_distribuidor = ?";
-    
+
     private static final String SQL_ACTIVAR = "UPDATE distribuidor SET id_entidad_estado = 1 WHERE id_distribuidor = ?";
 
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM distribuidor WHERE id_distribuidor = ?";
 
+    /**
+     * Metodo que sirve para listar informacion de la base de datos
+     *
+     * @return ArrayList de objetos 
+     *
+     */
     @Override
     public ArrayList<Object> getList() {
         Connection conn = null;
@@ -69,6 +75,14 @@ public class DistribuidorDAO extends DAO implements IDAO {
         return list;
     }
 
+    /**
+     * Metodo cuya funcionalidad es agregar objetos a la base de datos
+     * dependiendo de su clase
+     *
+     * @param obj objeto
+     * @return Devuelve un booelean
+     *
+     */
     @Override
     public boolean insertar(Object obj) {
         Connection conn = null;
@@ -82,7 +96,7 @@ public class DistribuidorDAO extends DAO implements IDAO {
             stmt.setString(2, distribuidor.getRutDistribuidor());
             stmt.setInt(3, distribuidor.getDireccion().getIdDireccion());
             stmt.setInt(4, distribuidor.getTelefono().getIdTelefono());
-            stmt.setInt(6, distribuidor.getEstado());
+            stmt.setInt(5, distribuidor.getEstado());
             stmt.executeUpdate();
             estado = true;
             System.out.println("Inserto el distribuidor");
@@ -95,6 +109,12 @@ public class DistribuidorDAO extends DAO implements IDAO {
         return estado;
     }
 
+    /**
+     * Metodo encargado de modificar objetos en la base de datos
+     *
+     * @param obj objeto
+     * @return boolean
+     */
     @Override
     public boolean modificar(Object obj) {
         Connection conn = null;
@@ -106,9 +126,7 @@ public class DistribuidorDAO extends DAO implements IDAO {
             stmt = conn.prepareStatement(SQL_UPDATE);
             stmt.setString(1, distribuidor.getNombreDis());
             stmt.setString(2, distribuidor.getRutDistribuidor());
-            stmt.setInt(3, distribuidor.getDireccion().getIdDireccion());
-            stmt.setInt(4, distribuidor.getTelefono().getIdTelefono());
-            stmt.setInt(5, distribuidor.getIdDistribuidor());
+            stmt.setInt(3, distribuidor.getIdDistribuidor());
             stmt.executeUpdate();
 
             estado = true;
@@ -122,6 +140,12 @@ public class DistribuidorDAO extends DAO implements IDAO {
         return estado;
     }
 
+    /**
+     * Metodo que se encargar de buscar objetos de la base de datos
+     *
+     * @param idDistribuidor int
+     * @return object
+     */
     @Override
     public Distribuidor buscar(int idDistribuidor) {
         Connection conn = null;
@@ -163,6 +187,14 @@ public class DistribuidorDAO extends DAO implements IDAO {
         }
     }
 
+    /**
+     * Metodo que sirve para eliminar o cambiar el estado de los objetos en la
+     * base de datos
+     *
+     * @param id int
+     * @return boolean
+     *
+     */
     @Override
     public boolean eliminar(int id) {
         Connection conn = null;
@@ -183,13 +215,19 @@ public class DistribuidorDAO extends DAO implements IDAO {
         }
         return estado;
     }
-    
-    public boolean activar(int id){
+
+    /**
+     * Metodo que sirve para activar objetos de la base de datos
+     *
+     * @param id int
+     * @return boolean
+     */
+    public boolean activar(int id) {
         Connection conn = null;
         PreparedStatement stmt = null;
         boolean estado = false;
-        
-         try {
+
+        try {
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_ACTIVAR);
             stmt.setInt(1, id);

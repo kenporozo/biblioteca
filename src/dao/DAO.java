@@ -16,44 +16,49 @@ import java.sql.Statement;
  */
 public class DAO {
 
+    /**
+     * Clase padre, de la cual heredan todas las clases DAO. Su función es la
+     * conexión a la base de datos.
+     */
+
     protected String dbURL;
     protected String dbDatabase;
     protected String dbUser;
     protected String dbPass;
 
     public DAO() {
-    dbURL       = "jdbc:mysql://localhost:3306/";
-    dbDatabase  = "biblioteca_leon_jonayker?autoReconnect=true&useSSL=false";
-    dbUser      = "root";
-    dbPass      = "admin";
-  }
-    
-     protected Connection getConnection() {
-    try {
-      return DriverManager.getConnection(dbURL + dbDatabase, dbUser, dbPass);
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
+        dbURL = "jdbc:mysql://localhost:3306/";
+        dbDatabase = "biblioteca_leon_jonayker?autoReconnect=true&useSSL=false";
+        dbUser = "root";
+        dbPass = "admin";
     }
-  }
-    
-     protected void close(Connection conn) {
-    if (conn != null) {
-      try {
-        conn.close();
-      } catch (SQLException e) {
-        throw new RuntimeException(e);
-      }
+
+    protected Connection getConnection() {
+        try {
+            return DriverManager.getConnection(dbURL + dbDatabase, dbUser, dbPass);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
-  }
-     
-      protected void close(Statement stmt) {
-    if (stmt != null) {
-      try {
-        stmt.close();
-      } catch (SQLException e) {
-        throw new RuntimeException(e);
-      }
+
+    protected void close(Connection conn) {
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
-  }
-  
+
+    protected void close(Statement stmt) {
+        if (stmt != null) {
+            try {
+                stmt.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 }

@@ -78,7 +78,5 @@ public class Editorial {
         }
         return true;
     }
-    
-    
 
 }

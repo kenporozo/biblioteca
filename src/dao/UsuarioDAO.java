@@ -17,8 +17,8 @@ import modelo.Usuario;
  *
  * @author Usuario
  */
-public class UsuarioDAO extends DAO implements IDAO{
-    
+public class UsuarioDAO extends DAO implements IDAO {
+
     private static final String SQL_INSERT = "INSERT INTO usuario (id_trabajador, usuario, clave, id_estado) VALUES(?, ?, ?, ?)";
     private static final String SQL_SELECT = "SELECT * FROM usuario ORDER BY id_usuario";
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM usuario WHERE id_usuario = ?";
@@ -27,6 +27,12 @@ public class UsuarioDAO extends DAO implements IDAO{
     private static final String SQL_ACTIVAR = "UPDATE usuario SET id_estado = 1 WHERE id_usuario = ?";
     private static final String SQL_LOGIN = "SELECT * FROM usuario WHERE usuario = ? and clave = ? and id_estado = 1";
 
+    /**
+     * Metodo que sirve para listar informacion de la base de datos
+     *
+     * @return ArrayList de objetos 
+     *
+     */
     @Override
     public ArrayList<Object> getList() {
         Connection conn = null;
@@ -45,9 +51,9 @@ public class UsuarioDAO extends DAO implements IDAO{
                 String usu = rs.getString("usuario");
                 String clave = rs.getString("clave");
                 int idEstado = rs.getInt("id_estado");
-                
+
                 Trabajador trabajador = (Trabajador) tDAO.buscar(idTrabajador);
-                
+
                 Usuario usuario = new Usuario(idUsuario, trabajador, usu, clave, idEstado);
                 list.add(usuario);
             }
@@ -61,6 +67,14 @@ public class UsuarioDAO extends DAO implements IDAO{
         return list;
     }
 
+    /**
+     * Metodo cuya funcionalidad es agregar objetos a la base de datos
+     * dependiendo de su clase
+     *
+     * @param obj objeto
+     * @return Devuelve un booelean
+     *
+     */
     @Override
     public boolean insertar(Object obj) {
         Connection conn = null;
@@ -87,6 +101,12 @@ public class UsuarioDAO extends DAO implements IDAO{
 
     }
 
+    /**
+     * Metodo encargado de modificar objetos en la base de datos
+     *
+     * @param obj obejto
+     * @return boolean
+     */
     @Override
     public boolean modificar(Object obj) {
         Connection conn = null;
@@ -113,6 +133,14 @@ public class UsuarioDAO extends DAO implements IDAO{
         return estado;
     }
 
+    /**
+     * Metodo que sirve para eliminar o cambiar el estado de los objetos en la
+     * base de datos
+     *
+     * @param id int
+     * @return boolean
+     *
+     */
     @Override
     public boolean eliminar(int id) {
         Connection conn = null;
@@ -134,6 +162,12 @@ public class UsuarioDAO extends DAO implements IDAO{
         return estado;
     }
 
+    /**
+     * Metodo que se encargar de buscar objetos de la base de datos
+     *
+     * @param id int
+     * @return object
+     */
     @Override
     public Object buscar(int id) {
         Connection conn = null;
@@ -154,9 +188,9 @@ public class UsuarioDAO extends DAO implements IDAO{
                 String usu = rs.getString("usuario");
                 String clave = rs.getString("clave");
                 int idEstado = rs.getInt("id_estado");
-                
+
                 Trabajador trabajador = (Trabajador) tDAO.buscar(idTrabajador);
-                
+
                 Usuario usuario = new Usuario(idUsuario, trabajador, usu, clave, idEstado);
                 return usuario;
             } else {
@@ -171,7 +205,14 @@ public class UsuarioDAO extends DAO implements IDAO{
             close(conn);
         }
     }
-    
+
+    /**
+     * Metodo que sirve para poder iniciar sesión en la aplicación
+     *
+     * @param usuario Strin
+     * @param clave String
+     * @return un usuario
+     */
     public Usuario login(String usuario, String clave) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -189,9 +230,9 @@ public class UsuarioDAO extends DAO implements IDAO{
             if (rs.next()) {
                 int idUsuario = rs.getInt("id_usuario");
                 int idTrabajador = rs.getInt("id_trabajador");
-                
+
                 Trabajador trabajador = (Trabajador) tDAO.buscar(idTrabajador);
-                
+
                 Usuario user = new Usuario(idUsuario, trabajador, usuario, clave, 1);
                 return user;
             } else {
@@ -206,13 +247,19 @@ public class UsuarioDAO extends DAO implements IDAO{
             close(conn);
         }
     }
-    
-     public boolean activar(int id){
+
+    /**
+     * Metodo que sirve para activar objetos de la base de datos
+     *
+     * @param id int
+     * @return boolean
+     */
+    public boolean activar(int id) {
         Connection conn = null;
         PreparedStatement stmt = null;
         boolean estado = false;
-        
-         try {
+
+        try {
             conn = getConnection();
             stmt = conn.prepareStatement(SQL_ACTIVAR);
             stmt.setInt(1, id);
@@ -228,5 +275,5 @@ public class UsuarioDAO extends DAO implements IDAO{
         }
         return estado;
     }
-    
+
 }

@@ -144,7 +144,7 @@ public class Libro {
 
     @Override
     public String toString() {
-        return "Libro: " + idLibro + ", " + isbn + ", " + titulo + ", " + cantidadPaginas + ", " + fechaPublicacion + ", " + precio + ", " + idioma + ", " + editorial + ", " + categoria + ", " + autor + ", " + estado;
+        return titulo;
     }
 
 }

@@ -237,7 +237,7 @@ public class FrmIdioma extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-       if (tablaListadoIdiomas.getSelectedRowCount() == 1) {
+        if (tablaListadoIdiomas.getSelectedRowCount() == 1) {
             String id = String.valueOf(tablaListadoIdiomas.getValueAt(tablaListadoIdiomas.getSelectedRow(), 0));
             String idioma = String.valueOf(tablaListadoIdiomas.getValueAt(tablaListadoIdiomas.getSelectedRow(), 1));
 
@@ -251,7 +251,7 @@ public class FrmIdioma extends javax.swing.JInternalFrame {
             btnGuardar.setText("Editar");
 
         } else {
-          this.mensajeError("Seleccione 1 registro a editar.");
+            this.mensajeError("Seleccione 1 registro a editar.");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -267,14 +267,14 @@ public class FrmIdioma extends javax.swing.JInternalFrame {
             int id = Integer.parseInt(txtId.getText());
             String idioma = txtIdioma.getText();
             idom = new Idioma(id, idioma);
-            if(iDAO.modificar(idom)){
+            if (iDAO.modificar(idom)) {
                 this.mensajeOk("Categoria actualizada existosamente");
                 this.limpiar();
                 this.listar();
                 tabGeneral.setEnabledAt(0, true);
                 tabGeneral.setEnabledAt(1, false);
                 tabGeneral.setSelectedIndex(0);
-            }else{
+            } else {
                 this.mensajeError("Ocurrió un error, la categoria no fue actualizada");
             }
 

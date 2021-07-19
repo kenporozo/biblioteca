@@ -11,24 +11,24 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Cliente;
-import modelo.Telefono;
+import modelo.Direccion;
 import modelo.Trabajador;
 
 /**
  *
  * @author Usuario
  */
-public class FrmTelefonos extends javax.swing.JInternalFrame {
+public class FrmDirecciones extends javax.swing.JInternalFrame {
 
-    TelefonoDAO tlfDAO = new TelefonoDAO();
+    DireccionDAO dDAO = new DireccionDAO();
     TrabajadorDAO tDAO = new TrabajadorDAO();
     ClienteDAO clDAO = new ClienteDAO();
     String accion, person;
 
     /**
-     * Creates new form FrmTelefonos
+     * Creates new form FrmDirecciones
      */
-    public FrmTelefonos() {
+    public FrmDirecciones() {
         initComponents();
         this.listar();
         this.cargarTrabajadores();
@@ -38,42 +38,43 @@ public class FrmTelefonos extends javax.swing.JInternalFrame {
     }
 
     private void listar() {
-        ArrayList<Object> listaTrabajadores = tlfDAO.getListTrabajadores();
-        ArrayList<Object> listaClientes = tlfDAO.getListClientes();
+        ArrayList<Object> listaTrabajadores = dDAO.getListTrabajadores();
+        ArrayList<Object> listaClientes = dDAO.getListClientes();
         DefaultTableModel modeloTabla;
 
-        String[] titulos = {"ID", "Nombre", "Apellido", "RUT", "Nro. Telefono", "Persona"};
+        String[] titulos = {"ID", "Nombre", "Apellido", "RUT", "Direccion", "Persona"};
         modeloTabla = new DefaultTableModel(null, titulos);
 
         for (Object obj : listaTrabajadores) {
             Trabajador trabajador = (Trabajador) obj;
             Object[] row = new Object[6];
-            row[0] = trabajador.getTelefono().getIdTelefono();
+            row[0] = trabajador.getDireccion().getIdDireccion();
             row[1] = trabajador.getNombre();
             row[2] = trabajador.getApellido();
             row[3] = trabajador.getRut();
-            row[4] = trabajador.getTelefono().getNumTelf();
+            row[4] = trabajador.getDireccion().getDireccion();
             row[5] = "Trabajador";
             modeloTabla.addRow(row);
         }
         for (Object obj : listaClientes) {
             Cliente cliente = (Cliente) obj;
             Object[] row = new Object[6];
-            row[0] = cliente.getTelefono().getIdTelefono();
+            row[0] = cliente.getDireccion().getIdDireccion();
             row[1] = cliente.getNombre();
             row[2] = cliente.getApellido();
             row[3] = cliente.getRut();
-            row[4] = cliente.getTelefono().getNumTelf();
+            row[4] = cliente.getDireccion().getDireccion();
             row[5] = "Cliente";
             modeloTabla.addRow(row);
         }
 
-        tablaListadoTelefonos.setModel(modeloTabla);
+        tablaListadoDirec.setModel(modeloTabla);
         tabGeneral.setEnabledAt(1, false);
     }
 
     private void limpiar() {
-        txtTelefono.setText("");
+        txtDireccion.setText("");
+        txtId.setText("");
         this.accion = "guardar";
     }
 
@@ -116,34 +117,39 @@ public class FrmTelefonos extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
         tabGeneral = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaListadoTelefonos = new javax.swing.JTable();
-        btnNuevoTrabajador = new javax.swing.JButton();
-        btnNuevoCliente = new javax.swing.JButton();
+        tablaListadoDirec = new javax.swing.JTable();
+        btnNuevaDireccionT = new javax.swing.JButton();
+        btnNuevaDireccionCl = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtTelefono = new javax.swing.JTextField();
+        txtDireccion = new javax.swing.JTextField();
         lblTrabajador = new javax.swing.JLabel();
         cboTrabajadores = new javax.swing.JComboBox<>();
-        cboClientes = new javax.swing.JComboBox<>();
         lblClientes = new javax.swing.JLabel();
+        cboClientes = new javax.swing.JComboBox<>();
+        txtId = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        txtId = new javax.swing.JTextField();
+
+        jLabel2.setText("jLabel2");
 
         setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
         setIconifiable(true);
-        setTitle("Telefonos");
+        setTitle("Direcciones");
+
+        tabGeneral.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        tablaListadoTelefonos.setModel(new javax.swing.table.DefaultTableModel(
+        tablaListadoDirec.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -151,19 +157,19 @@ public class FrmTelefonos extends javax.swing.JInternalFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(tablaListadoTelefonos);
+        jScrollPane1.setViewportView(tablaListadoDirec);
 
-        btnNuevoTrabajador.setText("Nuevo Telefono Trabajadores");
-        btnNuevoTrabajador.addActionListener(new java.awt.event.ActionListener() {
+        btnNuevaDireccionT.setText("Nueva direccion trabajadores");
+        btnNuevaDireccionT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoTrabajadorActionPerformed(evt);
+                btnNuevaDireccionTActionPerformed(evt);
             }
         });
 
-        btnNuevoCliente.setText("Nuevo Telefono Clientes");
-        btnNuevoCliente.addActionListener(new java.awt.event.ActionListener() {
+        btnNuevaDireccionCl.setText("Nueva direccion clientes");
+        btnNuevaDireccionCl.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoClienteActionPerformed(evt);
+                btnNuevaDireccionClActionPerformed(evt);
             }
         });
 
@@ -187,46 +193,48 @@ public class FrmTelefonos extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addComponent(btnNuevoTrabajador)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(331, 331, 331))
+                .addGap(106, 106, 106)
+                .addComponent(btnNuevaDireccionT)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(289, 289, 289))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(82, 82, 82)
-                    .addComponent(btnNuevoCliente)
-                    .addContainerGap(593, Short.MAX_VALUE)))
+                    .addGap(108, 108, 108)
+                    .addComponent(btnNuevaDireccionCl)
+                    .addContainerGap(581, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addComponent(btnEliminar)
-                .addGap(20, 20, 20)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNuevoTrabajador)
+                    .addComponent(btnNuevaDireccionT)
                     .addComponent(btnEditar))
-                .addGap(60, 60, 60))
+                .addGap(49, 49, 49))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(335, Short.MAX_VALUE)
-                    .addComponent(btnNuevoCliente)
-                    .addGap(114, 114, 114)))
+                    .addContainerGap(282, Short.MAX_VALUE)
+                    .addComponent(btnNuevaDireccionCl)
+                    .addGap(108, 108, 108)))
         );
 
         tabGeneral.addTab("Listado", jPanel1);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setText("Nro. Telefono(*)");
+        jLabel1.setText("Direccion(*)");
 
-        lblTrabajador.setText("Trabajador(*)");
+        lblTrabajador.setText("Trabajadores(*)");
 
-        lblClientes.setText("Cliente(*)");
+        lblClientes.setText("Clientes(*)");
+
+        jLabel3.setText("(*) Indica que es un campo obligatorio");
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -242,63 +250,63 @@ public class FrmTelefonos extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel2.setText("(*) Indica que es un campo obligatorio");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblClientes)
-                        .addGap(84, 84, 84)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel1)
+                            .addComponent(lblClientes))
+                        .addGap(36, 36, 36)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
+                            .addComponent(cboClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(btnGuardar)
-                                .addGap(80, 80, 80)
-                                .addComponent(btnVolver))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(103, 103, 103)
-                                .addComponent(lblTrabajador)
-                                .addGap(48, 48, 48)
-                                .addComponent(cboTrabajadores, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(187, Short.MAX_VALUE))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(63, 63, 63)
+                                        .addComponent(btnGuardar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnVolver))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(133, 133, 133)
+                                        .addComponent(lblTrabajador)))
+                                .addGap(47, 47, 47)
+                                .addComponent(cboTrabajadores, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(201, 201, 201)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(310, 310, 310)
+                        .addComponent(jLabel3)))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addGap(61, 61, 61)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTrabajador)
                     .addComponent(cboTrabajadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addGap(27, 27, 27)
                 .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblClientes)
                     .addComponent(cboClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addGap(80, 80, 80)
+                .addComponent(jLabel3)
+                .addGap(31, 31, 31)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnVolver))
-                .addGap(114, 114, 114))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         tabGeneral.addTab("Mantenimiento", jPanel2);
@@ -307,17 +315,36 @@ public class FrmTelefonos extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabGeneral, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tabGeneral)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabGeneral, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tabGeneral)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNuevoTrabajadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoTrabajadorActionPerformed
+    private void btnNuevaDireccionClActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaDireccionClActionPerformed
+        tabGeneral.setEnabledAt(1, true);
+        tabGeneral.setEnabledAt(0, false);
+        tabGeneral.setSelectedIndex(1);
+        this.accion = "guardar";
+        btnGuardar.setText("Guardar");
+        lblTrabajador.setVisible(false);
+        cboTrabajadores.setVisible(false);
+        lblClientes.setVisible(true);
+        cboClientes.setVisible(true);
+        this.person = "Cliente";
+    }//GEN-LAST:event_btnNuevaDireccionClActionPerformed
+
+    private void btnNuevaDireccionTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaDireccionTActionPerformed
         tabGeneral.setEnabledAt(1, true);
         tabGeneral.setEnabledAt(0, false);
         tabGeneral.setSelectedIndex(1);
@@ -328,15 +355,15 @@ public class FrmTelefonos extends javax.swing.JInternalFrame {
         lblTrabajador.setVisible(true);
         cboTrabajadores.setVisible(true);
         this.person = "Trabajador";
-    }//GEN-LAST:event_btnNuevoTrabajadorActionPerformed
+    }//GEN-LAST:event_btnNuevaDireccionTActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (tablaListadoTelefonos.getSelectedRowCount() == 1) {
-            String id = String.valueOf(tablaListadoTelefonos.getValueAt(tablaListadoTelefonos.getSelectedRow(), 0));
-            String telefono = String.valueOf(tablaListadoTelefonos.getValueAt(tablaListadoTelefonos.getSelectedRow(), 4));
+        if (tablaListadoDirec.getSelectedRowCount() == 1) {
+            String id = String.valueOf(tablaListadoDirec.getValueAt(tablaListadoDirec.getSelectedRow(), 0));
+            String direccion = String.valueOf(tablaListadoDirec.getValueAt(tablaListadoDirec.getSelectedRow(), 4));
 
             txtId.setText(id);
-            txtTelefono.setText(telefono);
+            txtDireccion.setText(direccion);
 
             tabGeneral.setEnabledAt(0, false);
             tabGeneral.setEnabledAt(1, true);
@@ -353,90 +380,15 @@ public class FrmTelefonos extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnEditarActionPerformed
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (txtTelefono.getText().length() == 0 || txtTelefono.getText().length() > 9) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido", "System", JOptionPane.WARNING_MESSAGE);
-            txtTelefono.requestFocus();
-            return;
-        }
-
-        if (this.accion.equals("editar")) {
-            int id = Integer.parseInt(txtId.getText());
-            String telefono = txtTelefono.getText();
-            Telefono tlf = new Telefono(id, telefono);
-            if (tlfDAO.modificar(tlf)) {
-                this.mensajeOk("Numero actualizado existosamente");
-                this.limpiar();
-                this.listar();
-                tabGeneral.setEnabledAt(0, true);
-                tabGeneral.setEnabledAt(1, false);
-                tabGeneral.setSelectedIndex(0);
-            } else {
-                this.mensajeError("Ocurrió un error, el numero no fue actualizado");
-            }
-
-        } else {
-
-            if (this.person.equals("Trabajador")) {
-                String numero = txtTelefono.getText();
-                Trabajador trabajador = (Trabajador) cboTrabajadores.getSelectedItem();
-                Telefono tlf = new Telefono(numero);
-                int id = tlfDAO.insertarID(tlf);
-                if (id != 0) {
-                    if (tlfDAO.insertarTlfTrabajador(id, trabajador.getIdTrabajador())) {
-                        this.mensajeOk("Telefono añadido existosamente");
-                        this.limpiar();
-                        this.listar();
-                        tabGeneral.setEnabledAt(0, true);
-                        tabGeneral.setEnabledAt(1, false);
-                        tabGeneral.setSelectedIndex(0);
-                    } else {
-                        this.mensajeError("Ocurrió un error al intentar agregar el telefono");
-                    }
-                }
-            } else {
-                String numero = txtTelefono.getText();
-                Cliente cliente = (Cliente) cboClientes.getSelectedItem();
-                Telefono tlf = new Telefono(numero);
-                int id = tlfDAO.insertarID(tlf);
-                if (id != 0) {
-                    if (tlfDAO.insertarTlfCliente(id, cliente.getIdCliente())) {
-                        this.mensajeOk("Telefono añadido existosamente");
-                        this.limpiar();
-                        this.listar();
-                        tabGeneral.setEnabledAt(0, true);
-                        tabGeneral.setEnabledAt(1, false);
-                        tabGeneral.setSelectedIndex(0);
-                    } else {
-                        this.mensajeError("Ocurrió un error al intentar agregar el telefono");
-                    }
-                }
-            }
-        }
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void btnNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoClienteActionPerformed
-        tabGeneral.setEnabledAt(1, true);
-        tabGeneral.setEnabledAt(0, false);
-        tabGeneral.setSelectedIndex(1);
-        this.accion = "guardar";
-        btnGuardar.setText("Guardar");
-        lblTrabajador.setVisible(false);
-        cboTrabajadores.setVisible(false);
-        lblClientes.setVisible(true);
-        cboClientes.setVisible(true);
-        this.person = "Cliente";
-    }//GEN-LAST:event_btnNuevoClienteActionPerformed
-
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        if (tablaListadoTelefonos.getSelectedRowCount() == 1) {
-            String persona = String.valueOf(tablaListadoTelefonos.getValueAt(tablaListadoTelefonos.getSelectedRow(), 5));
+        if (tablaListadoDirec.getSelectedRowCount() == 1) {
+            String persona = String.valueOf(tablaListadoDirec.getValueAt(tablaListadoDirec.getSelectedRow(), 5));
             if (persona.equals("Trabajador")) {
 
-                String id = String.valueOf(tablaListadoTelefonos.getValueAt(tablaListadoTelefonos.getSelectedRow(), 0));
-                String telefono = String.valueOf(tablaListadoTelefonos.getValueAt(tablaListadoTelefonos.getSelectedRow(), 4));
-                if (JOptionPane.showConfirmDialog(this, "Deseas eliminar el número de telefono : " + telefono + " ?", "Eliminar", JOptionPane.YES_NO_OPTION) == 0) {
-                    if (tlfDAO.eliminar(Integer.parseInt(id))) {
+                String id = String.valueOf(tablaListadoDirec.getValueAt(tablaListadoDirec.getSelectedRow(), 0));
+                String direccion = String.valueOf(tablaListadoDirec.getValueAt(tablaListadoDirec.getSelectedRow(), 4));
+                if (JOptionPane.showConfirmDialog(this, "Deseas eliminar la direccion: " + direccion + " ?", "Eliminar", JOptionPane.YES_NO_OPTION) == 0) {
+                    if (dDAO.eliminar(Integer.parseInt(id))) {
                         this.mensajeOk("Registro eliminado");
                         this.listar();
                     } else {
@@ -444,10 +396,10 @@ public class FrmTelefonos extends javax.swing.JInternalFrame {
                     }
                 }
             } else {
-                String id = String.valueOf(tablaListadoTelefonos.getValueAt(tablaListadoTelefonos.getSelectedRow(), 0));
-                String telefono = String.valueOf(tablaListadoTelefonos.getValueAt(tablaListadoTelefonos.getSelectedRow(), 4));
-                if (JOptionPane.showConfirmDialog(this, "Deseas eliminar el número de telefono : " + telefono + " ?", "Eliminar", JOptionPane.YES_NO_OPTION) == 0) {
-                    if (tlfDAO.eliminarCl(Integer.parseInt(id))) {
+                String id = String.valueOf(tablaListadoDirec.getValueAt(tablaListadoDirec.getSelectedRow(), 0));
+                String direccion = String.valueOf(tablaListadoDirec.getValueAt(tablaListadoDirec.getSelectedRow(), 4));
+                if (JOptionPane.showConfirmDialog(this, "Deseas eliminar la direccion: " + direccion + " ?", "Eliminar", JOptionPane.YES_NO_OPTION) == 0) {
+                    if (dDAO.eliminarCl(Integer.parseInt(id))) {
                         this.mensajeOk("Registro eliminado");
                         this.listar();
                     } else {
@@ -470,26 +422,90 @@ public class FrmTelefonos extends javax.swing.JInternalFrame {
         this.limpiar();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if (txtDireccion.getText().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número válido", "System", JOptionPane.WARNING_MESSAGE);
+            txtDireccion.requestFocus();
+            return;
+        }
+
+        if (this.accion.equals("editar")) {
+            int id = Integer.parseInt(txtId.getText());
+            String direccion = txtDireccion.getText();
+            Direccion direc = new Direccion(id, direccion);
+            if (dDAO.modificar(direc)) {
+                this.mensajeOk("Direccion actualizada existosamente");
+                this.limpiar();
+                this.listar();
+                tabGeneral.setEnabledAt(0, true);
+                tabGeneral.setEnabledAt(1, false);
+                tabGeneral.setSelectedIndex(0);
+            } else {
+                this.mensajeError("Ocurrió un error, la direccion no fue actualizado");
+            }
+
+        } else {
+
+            if (this.person.equals("Trabajador")) {
+                String direccion = txtDireccion.getText();
+                Trabajador trabajador = (Trabajador) cboTrabajadores.getSelectedItem();
+                Direccion direcc = new Direccion(direccion);
+                int id = dDAO.insertarID(direcc);
+                if (id != 0) {
+                    if (dDAO.insertarDireccionTrabajador(id, trabajador.getIdTrabajador())) {
+                        this.mensajeOk("Direccion añadida existosamente");
+                        this.limpiar();
+                        this.listar();
+                        tabGeneral.setEnabledAt(0, true);
+                        tabGeneral.setEnabledAt(1, false);
+                        tabGeneral.setSelectedIndex(0);
+                    } else {
+                        this.mensajeError("Ocurrió un error al intentar agregar la direccion");
+                    }
+                }
+            } else {
+                String direccion = txtDireccion.getText();
+                Cliente cliente = (Cliente) cboClientes.getSelectedItem();
+                Direccion direcc = new Direccion(direccion);
+                int id = dDAO.insertarID(direcc);
+                if (id != 0) {
+                    if (dDAO.insertarDireccionCliente(id, cliente.getIdCliente())) {
+                        this.mensajeOk("Direccion añadida existosamente");
+                        this.limpiar();
+                        this.listar();
+                        tabGeneral.setEnabledAt(0, true);
+                        tabGeneral.setEnabledAt(1, false);
+                        tabGeneral.setSelectedIndex(0);
+                    } else {
+                        this.mensajeError("Ocurrió un error al intentar agregar la direccion");
+                    }
+                }
+            }
+        }
+
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnNuevoCliente;
-    private javax.swing.JButton btnNuevoTrabajador;
+    private javax.swing.JButton btnNuevaDireccionCl;
+    private javax.swing.JButton btnNuevaDireccionT;
     private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cboClientes;
     private javax.swing.JComboBox<String> cboTrabajadores;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblClientes;
     private javax.swing.JLabel lblTrabajador;
     private javax.swing.JTabbedPane tabGeneral;
-    private javax.swing.JTable tablaListadoTelefonos;
+    private javax.swing.JTable tablaListadoDirec;
+    private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

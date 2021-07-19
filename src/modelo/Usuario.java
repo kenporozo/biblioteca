@@ -10,6 +10,7 @@ package modelo;
  * @author Usuario
  */
 public class Usuario {
+
     private int idUsuario;
     private Trabajador trabajador;
     private String usuario;
@@ -26,12 +27,11 @@ public class Usuario {
         this.estado = 1;
     }
 
-    public Usuario(int idUsuario,String usuario, String clave) {
+    public Usuario(int idUsuario, String usuario, String clave) {
         this.usuario = usuario;
         this.clave = clave;
         this.idUsuario = idUsuario;
     }
-    
 
     public Usuario(int idUsuario, Trabajador trabajador, String usuario, String clave, int estado) {
         this.idUsuario = idUsuario;
@@ -85,5 +85,5 @@ public class Usuario {
     public String toString() {
         return "Usuario{" + "idUsuario=" + idUsuario + ", trabajador=" + trabajador + ", usuario=" + usuario + ", clave=" + clave + ", estado=" + estado + '}';
     }
-    
+
 }

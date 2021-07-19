@@ -16,45 +16,76 @@ public class Factura {
     private double precioIva;
     private final static double COSTO_IVA = 0.19;
     private int costoIva = (int) (COSTO_IVA * 100);
-    //private final static int costoIvaDBO = (int) COSTO_IVA;
     private String fechaCompra;
     private String horaCompra;
     private String detalleCompra;
+    private String fechaEstimada;
     private int idPago;
-    private Distribuidor distribuidor;
 
     public Factura() {
     }
 
-    public Factura(double precioNeto, String fechaCompra, String horaCompra, Distribuidor distribuidor, int idPago, String detalleCompra) {
+    public Factura(int idFactura, double precioNeto, double precioIva, String fechaCompra, int idPago) {
+        this.idFactura = idFactura;
+        this.precioNeto = precioNeto;
+        this.precioIva = precioIva;
+        this.fechaCompra = fechaCompra;
+        this.idPago = idPago;
+    }
+
+    public Factura(int idFactura, double precioNeto, double precioIva, String fechaCompra, String detalleCompra, int idPago) {
+        this.idFactura = idFactura;
+        this.precioNeto = precioNeto;
+        this.precioIva = precioIva;
+        this.fechaCompra = fechaCompra;
+        this.detalleCompra = detalleCompra;
+        this.idPago = idPago;
+    }
+
+    public Factura(double precioNeto, int idPago, String detalleCompra) {
         this.precioNeto = precioNeto;
         this.precioIva = (precioNeto * COSTO_IVA) + precioNeto;
-        this.fechaCompra = fechaCompra;
-        this.horaCompra = horaCompra;
-        this.distribuidor = distribuidor;
         this.idPago = idPago;
         this.detalleCompra = detalleCompra;
     }
 
-    public Factura(int idFactura, double costoNeto, String fechaCompra, String horaCompra, Distribuidor distribuidor, int idPago, String detalleCompra) {
+    public Factura(double precioNeto, int idPago) {
+        this.precioNeto = precioNeto;
+        this.precioIva = (precioNeto * COSTO_IVA) + precioNeto;
+        this.idPago = idPago;
+    }
+
+    public Factura(double precioNeto, String fechaEstimada) {
+        this.precioNeto = precioNeto;
+        this.precioIva = (precioNeto * COSTO_IVA) + precioNeto;
+        this.fechaEstimada = fechaEstimada;
+    }
+
+    public Factura(int idFactura, double costoNeto, String fechaCompra, String horaCompra, int idPago, String detalleCompra) {
         this.idFactura = idFactura;
         this.precioNeto = costoNeto;
         this.precioIva = (costoNeto * COSTO_IVA) + costoNeto;
         this.fechaCompra = fechaCompra;
         this.horaCompra = horaCompra;
-        this.distribuidor = distribuidor;
         this.idPago = idPago;
         this.detalleCompra = detalleCompra;
     }
 
-    public Factura(int idFactura, double costoNeto, double precioIva, int costoIva, String fechaCompra, String horaCompra, Distribuidor distribuidor, int idPago, String detalleCompra){
+    public Factura(int idFactura, double costoNeto, double precioIva, String fechaCompra, String fechaEstimada) {
+        this.idFactura = idFactura;
+        this.precioNeto = costoNeto;
+        this.precioIva = precioIva;
+        this.fechaCompra = fechaCompra;
+        this.fechaEstimada = fechaEstimada;
+    }
+
+    public Factura(int idFactura, double costoNeto, double precioIva, int costoIva, String fechaCompra, String horaCompra, int idPago, String detalleCompra) {
         this.idFactura = idFactura;
         this.precioNeto = costoNeto;
         this.precioIva = precioIva;
         this.costoIva = costoIva;
         this.fechaCompra = fechaCompra;
         this.horaCompra = horaCompra;
-        this.distribuidor = distribuidor;
         this.idPago = idPago;
         this.detalleCompra = detalleCompra;
     }
@@ -115,21 +146,21 @@ public class Factura {
         this.idPago = idPago;
     }
 
-    public Distribuidor getDistribuidor() {
-        return distribuidor;
-    }
-
-    public void setDistribuidor(Distribuidor distribuidor) {
-        this.distribuidor = distribuidor;
-    }
-
     public int getCostoIva() {
         return costoIva;
     }
 
+    public String getFechaEstimada() {
+        return fechaEstimada;
+    }
+
+    public void setFechaEstimada(String fechaEstimada) {
+        this.fechaEstimada = fechaEstimada;
+    }
+
     @Override
     public String toString() {
-        return "Factura: " + idFactura + ", " + precioNeto + ", " + precioIva + ", " + costoIva + "%" + ", " + fechaCompra + ", " + horaCompra + ", " + distribuidor + ", " + idPago + ", " + detalleCompra;
+        return "Factura: " + idFactura + ", " + precioNeto + ", " + precioIva + ", " + costoIva + "%" + ", " + fechaCompra + ", " + horaCompra + ", " + idPago + ", " + detalleCompra;
     }
 
 }

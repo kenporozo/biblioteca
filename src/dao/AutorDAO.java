@@ -28,6 +28,10 @@ public class AutorDAO extends DAO implements IDAO{
 
     private static final String SQL_SELECT_BY_ID = "SELECT * FROM autor WHERE id_autor = ?";
 
+      /** 
+     * Metodo que sirve para listar informacion de la base de datos
+     * @return ArrayList de objetos 
+     **/
     @Override
     public ArrayList<Object> getList() {
         Connection conn = null;
@@ -66,6 +70,11 @@ public class AutorDAO extends DAO implements IDAO{
         return list;
     }
 
+     /** 
+     * Metodo cuya funcionalidad es agregar objetos a la base de datos dependiendo de su clase
+     * @param obj objeto
+     * @return Devuelve un booelean
+     **/
     @Override
     public boolean insertar(Object obj) {
         Connection conn = null;
@@ -92,6 +101,12 @@ public class AutorDAO extends DAO implements IDAO{
         return estado;
     }
 
+    /**
+     * Metodo encargado de modificar objetos en la base de datos
+     *
+     * @param obj objeto
+     * @return boolean
+     */
     @Override
     public boolean modificar(Object obj) {
         Connection conn = null;
@@ -119,6 +134,11 @@ public class AutorDAO extends DAO implements IDAO{
         return estado;
     }
 
+        /** 
+     * Metodo que sirve para eliminar o cambiar el estado de los objetos en la base de datos
+     * @param idAutor int
+     * @return boolean
+     **/
     @Override
     public boolean eliminar(int idAutor) {
         Connection conn = null;
@@ -142,6 +162,11 @@ public class AutorDAO extends DAO implements IDAO{
         return estado;
     }
 
+     /** 
+      Metodo que se encargar de buscar objetos de la base de datos
+     * @param idAutor int
+     * @return object
+      */
     @Override
     public Object buscar(int idAutor) {
         Connection conn = null;

@@ -31,6 +31,11 @@ public class Distribuidor {
         this.estado = 1;
     }
 
+    public Distribuidor(int idDistribuidor, String nombreDis) {
+        this.idDistribuidor = idDistribuidor;
+        this.nombreDis = nombreDis;
+    }
+
     public Distribuidor(int idDistribuidor, String nombreDis, String rutDistribuidor,  Telefono telefono, Direccion direccion, String fechaLaboral, int estado) {
         this.idDistribuidor = idDistribuidor;
         this.nombreDis = nombreDis;
@@ -99,7 +104,7 @@ public class Distribuidor {
     
     @Override
     public String toString() {
-        return "Distribuidor: " + idDistribuidor +" "+ nombreDis+ " " + rutDistribuidor + " " + fechaLaboral + " " + telefono + " " + direccion + " " + estado;
+        return nombreDis;
     }
 
     @Override
